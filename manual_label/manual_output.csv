@@ -1,0 +1,3606 @@
+,Question Title,Question,Tags,Question_User_Id,Answer_User_Id,Topic_key_word
+0,Pass Parameters to AddHostedService,"<p>I am writing a .Net Core windows service and here is a snippet of code:</p>
+<pre><code>internal static class Program
+    {
+        public static async Task Main(string[] args)
+        {
+            var isService = !(Debugger.IsAttached || args.Contains(&quot;--console&quot;));
+
+            var builder = new HostBuilder()
+                .ConfigureServices((hostContext, services) =&gt;
+                {
+                    services.AddHostedService&lt;IntegrationService&gt;();
+                });
+
+            if (isService)
+            {
+                await builder.RunAsServiceAsync();
+            }
+            else
+            {
+                await builder.RunConsoleAsync();
+            }
+        }
+    } 
+</code></pre>
+<p>I want to pass some parameters to my service i.e. <code>IntegrationService</code> - how I can send parameters to my service?</p>
+","c#,asp.net-core,.net-core,windows-services",57047632,57047889,1
+1,How to install ESlint with no npm?,"<p>I am working on enterprise computer with no internet access nor node (npm).
+I have downloaded ESlint manually and installed it to VS Code. Now it says that i need to use npm command for it to work, my question is how can i run ESlint globally without npm command/Node? Is it possible?</p>
+
+<p>This what i get:</p>
+
+<p>To use ESLint please install eslint by running npm install eslint in the workspace folder Supreme</p>
+
+<p>or globally using 'npm install -g eslint'. You need to reopen the workspace after installing eslint.</p>
+
+<p>after trying to set it right i get:</p>
+
+<p>PS C:\inetpub\wwwroot\Supreme> eslint --init</p>
+
+<p>eslint : The term 'eslint' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is correct and try</p>
+","node.js,npm,visual-studio-code,eslint",57075427,0,3
+2,Unable to create /path/.git/index.lock : Permission denied,"<p>I have issues using git commands after I did ""git clean -f -X"".  The only commands I can only use ""git status"" and ""git branch"".  I don't have anything that I care to commit since I just started this branch locally.  Any suggestions?  </p>
+
+<p>I have tried to remove ""rm -rf .git/index.lock"" and I even tried ""git reset HEAD^"" but it throws that message of Permission denied. </p>
+
+<p><code>rm -rf .git/index.lock</code>
+<code>git reset HEAD^</code></p>
+
+<p>I would like to use all git commands.</p>
+",git,57016143,57016154,3
+3,How to read Jenkins credentials at Folder level,"<p>I am trying to migrate credentials from Jenkins to another credentials store.  </p>
+
+<p>I want to read the credentials from the Jenkins store, and have found this script (<a href=""https://github.com/tkrzeminski/jenkins-groovy-scripts/blob/master/show-all-credentials.groovy"" rel=""nofollow noreferrer"">https://github.com/tkrzeminski/jenkins-groovy-scripts/blob/master/show-all-credentials.groovy</a></p>
+
+<p>The script does the job OK for SystemCredentialsProvider credentials for the <strong>global domain at root level</strong>.  </p>
+
+<p><strong>But my credentials are stored in a Folder</strong>, so the script does not work for me.  </p>
+
+<p>I am using the Jenkins script console to execute the script.  </p>
+
+<p>If I navigate to the Jenkins Credentials configuration page and hover over the icon for one of my credential entries, the tooltip says ""Folder Credentials Provider"". </p>
+
+<p>==================================================== </p>
+
+<p><strong>Question: How do I read all of the the credentials from a Folder in Jenkins?</strong></p>
+
+<p>====================================================</p>
+
+<p>Please see script, below:</p>
+
+<pre><code>import jenkins.model.*
+import com.cloudbees.plugins.credentials.*
+import com.cloudbees.plugins.credentials.impl.*
+import com.cloudbees.plugins.credentials.domains.*
+import com.cloudbees.jenkins.plugins.sshcredentials.impl.BasicSSHUserPrivateKey
+import com.cloudbees.jenkins.plugins.awscredentials.AWSCredentialsImpl
+import org.jenkinsci.plugins.plaincredentials.StringCredentials
+import org.jenkinsci.plugins.plaincredentials.impl.FileCredentialsImpl
+
+def showRow = { credentialType, secretId, username = null, password = null, description = null -&gt;
+  println(""${credentialType} : "".padLeft(20) + secretId?.padRight(38)+"" | "" +username?.padRight(20)+"" | "" +password?.padRight(40) + "" | "" +description)
+}
+
+// set Credentials domain name (null means is it global)
+domainName = null
+
+credentialsStore = Jenkins.instance.getExtensionList('com.cloudbees.plugins.credentials.SystemCredentialsProvider')[0]?.getStore()
+domain = new Domain(domainName, null, Collections.&lt;DomainSpecification&gt;emptyList())
+
+credentialsStore?.getCredentials(domain).each{
+  if(it instanceof UsernamePasswordCredentialsImpl)
+    showRow(""user/password"", it.id, it.username, it.password?.getPlainText(), it.description)
+  else if(it instanceof BasicSSHUserPrivateKey)
+    showRow(""ssh priv key"", it.id, it.passphrase?.getPlainText(), it.privateKeySource?.getPrivateKey(), it.description)
+  else if(it instanceof AWSCredentialsImpl)
+    showRow(""aws"", it.id, it.accessKey, it.secretKey?.getPlainText(), it.description)
+  else if(it instanceof StringCredentials)
+    showRow(""secret text"", it.id, it.secret?.getPlainText(), '', it.description)
+  else if(it instanceof FileCredentialsImpl)
+    showRow(""secret file"", it.id, it.content?.text, '', it.description)
+  else
+    showRow(""something else"", it.id, '', '', '')
+}
+
+return
+</code></pre>
+","jenkins,jenkins-pipeline,jenkins-plugins,jenkins-groovy",57107486,0,3
+4,This npgsqltransaction has completed it is no longer usable,"<p>Recently we have migrated from MSSQL database to PostgreSQL database. In order to have .NET access to PostgreSQL, we are using the NpgSql ADO.NET provider for PostgreSQL. We are getting the error ""This npgsqltransaction has completed it is no longer usable"" from our applications sometimes. This is a rare situation due to which we are unable to find the exact cause of the issue.</p>
+
+<p>Can someone let me know the cases and causes of this error?</p>
+
+<p>--Kamal</p>
+",npgsql,56882917,0,3
+5,Is it possible to produce circular (round) shaped radar chart in Chart.js?,"<p>When I plot a standard Chart.js radar chart, the axis is a polygon shape (not round). <a href=""https://www.chartjs.org/samples/latest/charts/area/radar.html"" rel=""nofollow noreferrer"">For example</a>:</p>
+
+<p><a href=""https://i.stack.imgur.com/CkZnV.png"" rel=""nofollow noreferrer""><img src=""https://i.stack.imgur.com/CkZnV.png"" alt=""example of radar area chart with incorrect axis""></a></p>
+
+<p>Is it possible to make the axis round shaped, <a href=""http://bl.ocks.org/nbremer/raw/21746a9668ffdf6d8242/"" rel=""nofollow noreferrer"">like this</a>?:</p>
+
+<p><a href=""https://i.stack.imgur.com/Smn2p.png"" rel=""nofollow noreferrer""><img src=""https://i.stack.imgur.com/Smn2p.png"" alt=""example of radar area chart with correct axis""></a></p>
+","javascript,chart.js",57188029,57198398,3
+6,How can I profile a Python Dataflow job?,"<p>I've written a Python Dataflow job to process some data:</p>
+
+<pre class=""lang-py prettyprint-override""><code>pipeline
+| ""read"" &gt;&gt; beam.io.ReadFromText(known_args.input)  # 9 min 44 sec
+| ""parse_line"" &gt;&gt; beam.Map(parse_line)  # 4 min 55 sec
+| ""add_key"" &gt;&gt; beam.Map(add_key)  # 48 sec
+| ""group_by_key"" &gt;&gt; beam.GroupByKey()  # 11 min 56 sec
+| ""map_values"" &gt;&gt; beam.ParDo(MapValuesFn())  # 11 min 40 sec
+| ""json_encode"" &gt;&gt; beam.Map(json.dumps)  # 26 sec
+| ""output"" &gt;&gt; beam.io.textio.WriteToText(known_args.output)  # 22 sec
+</code></pre>
+
+<p>(I have removed business-specific language.)</p>
+
+<p>The input is a 1.36 GiB gz-compressed CSV, yet the job takes 37 min 34 sec to run (I am using Dataflow as I expect the input to grow rapidly in size).</p>
+
+<p>How can I identify the bottle-necks in the pipeline and speed up its execution? None of the individual functions are computationally expensive.</p>
+
+<p>Autoscaling information from the Dataflow console:</p>
+
+<pre><code>12:00:35 PM     Starting a pool of 1 workers. 
+12:05:02 PM     Autoscaling: Raised the number of workers to 2 based on the rate of progress in the currently running step(s).
+12:10:02 PM     Autoscaling: Reduced the number of workers to 1 based on the rate of progress in the currently running step(s).
+12:29:09 PM     Autoscaling: Raised the number of workers to 3 based on the rate of progress in the currently running step(s).
+12:35:10 PM     Stopping worker pool.
+</code></pre>
+","python,google-cloud-dataflow",56932727,0,2
+7,Could not find the correct provider above this widget,"<p>I have a problem using Flutter Provider...
+My flow is like this: After login user id is passed to new widget -> from there it preforms save to db and then it redirects to new widget (Dashboard).</p>
+
+<p>And this is a code of a widget after Login:</p>
+
+<pre><code>return MaterialApp(
+      title: title,
+      home: Scaffold(
+          appBar: AppBar(
+            title: Text(title),
+          ),
+          body: ListView(
+            children: &lt;Widget&gt;[
+              Container(
+                margin: EdgeInsets.all(8.0),
+                child: Card(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(8.0))),
+                  child: InkWell(
+                    onTap: () {
+                      var user = Provider.of&lt;UserRepository&gt;(context);
+                      user.savePreference(user.user.id, ""Something"");
+                      user.navigateToNewPage(Dashboard(), context);
+                      print(user.user.id);
+                    },
+</code></pre>
+
+<p>This works:</p>
+
+<pre><code>user.savePreference(user.user.id, ""Something"");
+</code></pre>
+
+<p>But this is causing a problem:</p>
+
+<pre><code>user.navigateToNewPage(Dashboard(), context);
+</code></pre>
+
+<p>In Dashboard widget I am creating this:</p>
+
+<pre><code> Widget build(BuildContext context) {
+    var user = Provider.of&lt;UserRepository&gt;(context);
+</code></pre>
+
+<p>And in UserRepository I have this:</p>
+
+<pre><code>class UserRepository with ChangeNotifier {
+  User user;
+  Status _status = Status.Uninitialized;
+
+  Status get status =&gt; _status;
+  User get getUser =&gt; user;
+
+  UserRepository.instance();
+
+Future&lt;void&gt; navigateToNewPage(Widget page, BuildContext context) {
+    Navigator.push(context, MaterialPageRoute(builder: (context) =&gt; page));
+  }
+</code></pre>
+
+<p>I know this topic has already solved questions, but could not find anything suitable to my problem.</p>
+","flutter,dart,flutter-provider",57124258,57124694,1
+8,Calculate RSI indicator from pandas DataFrame?,"<h1>My problem</h1>
+
+<p>I tried many libraries on <strong>Github</strong> but all of them did not produce matching results for <strong>TradingView</strong> so I followed the formula on this <a href=""https://school.stockcharts.com/doku.php?id=technical_indicators:relative_strength_index_rsi"" rel=""noreferrer""><strong>link</strong></a> to calculate <strong>RSI</strong> indicator. I calculated it with <strong>Excel</strong> and collated the results with <strong>TradingView</strong>. I know it's <strong>absolutely correct</strong> but, but I didn't find a way to calculate it with <strong>Pandas</strong>.</p>
+
+<h1>Formula</h1>
+
+<pre><code>              100
+RSI = 100 - --------
+             1 + RS
+
+RS = Average Gain / Average Loss
+
+The very first calculations for average gain and average loss are simple
+14-period averages:
+
+First Average Gain = Sum of Gains over the past 14 periods / 14.
+First Average Loss = Sum of Losses over the past 14 periods / 14
+
+The second, and subsequent, calculations are based on the prior averages
+and the current gain loss:
+
+Average Gain = [(previous Average Gain) x 13 + current Gain] / 14.
+Average Loss = [(previous Average Loss) x 13 + current Loss] / 14.
+</code></pre>
+
+<h2>Expected Results</h2>
+
+<pre><code>     close   change     gain     loss     avg_gian    avg_loss        rs  \
+0    4724.89      NaN      NaN      NaN          NaN         NaN       NaN   
+1    4378.51  -346.38     0.00   346.38          NaN         NaN       NaN   
+2    6463.00  2084.49  2084.49     0.00          NaN         NaN       NaN   
+3    9838.96  3375.96  3375.96     0.00          NaN         NaN       NaN   
+4   13716.36  3877.40  3877.40     0.00          NaN         NaN       NaN   
+5   10285.10 -3431.26     0.00  3431.26          NaN         NaN       NaN   
+6   10326.76    41.66    41.66     0.00          NaN         NaN       NaN   
+7    6923.91 -3402.85     0.00  3402.85          NaN         NaN       NaN   
+8    9246.01  2322.10  2322.10     0.00          NaN         NaN       NaN   
+9    7485.01 -1761.00     0.00  1761.00          NaN         NaN       NaN   
+10   6390.07 -1094.94     0.00  1094.94          NaN         NaN       NaN   
+11   7730.93  1340.86  1340.86     0.00          NaN         NaN       NaN   
+12   7011.21  -719.72     0.00   719.72          NaN         NaN       NaN   
+13   6626.57  -384.64     0.00   384.64          NaN         NaN       NaN   
+14   6371.93  -254.64     0.00   254.64   931.605000  813.959286  1.144535   
+15   4041.32 -2330.61     0.00  2330.61   865.061786  922.291480  0.937948   
+16   3702.90  -338.42     0.00   338.42   803.271658  880.586374  0.912201   
+17   3434.10  -268.80     0.00   268.80   745.895111  836.887347  0.891273   
+18   3813.69   379.59   379.59     0.00   719.730460  777.109680  0.926163   
+19   4103.95   290.26   290.26     0.00   689.053999  721.601845  0.954895   
+20   5320.81  1216.86  1216.86     0.00   726.754428  670.058856  1.084613   
+21   8555.00  3234.19  3234.19     0.00   905.856968  622.197509  1.455899   
+22  10854.10  2299.10  2299.10     0.00  1005.374328  577.754830  1.740140   
+
+       rsi_14  
+0         NaN  
+1         NaN  
+2         NaN  
+3         NaN  
+4         NaN  
+5         NaN  
+6         NaN  
+7         NaN  
+8         NaN  
+9         NaN  
+10        NaN  
+11        NaN  
+12        NaN  
+13        NaN  
+14  53.369848  
+15  48.399038  
+16  47.704239  
+17  47.125561  
+18  48.083322  
+19  48.846358  
+20  52.029461  
+21  59.281719  
+22  63.505515  
+</code></pre>
+
+<h1>My Code</h1>
+
+<h2>Import</h2>
+
+<pre><code>import pandas as pd
+import numpy as np
+</code></pre>
+
+<h2>Load data</h2>
+
+<pre><code>df = pd.read_csv(""rsi_14_test_data.csv"")
+close = df['close']
+print(close)
+
+0      4724.89
+1      4378.51
+2      6463.00
+3      9838.96
+4     13716.36
+5     10285.10
+6     10326.76
+7      6923.91
+8      9246.01
+9      7485.01
+10     6390.07
+11     7730.93
+12     7011.21
+13     6626.57
+14     6371.93
+15     4041.32
+16     3702.90
+17     3434.10
+18     3813.69
+19     4103.95
+20     5320.81
+21     8555.00
+22    10854.10
+Name: close, dtype: float64
+</code></pre>
+
+<h2>Change</h2>
+
+<p>Calculate change every row</p>
+
+<pre><code>change = close.diff(1)
+print(change)
+
+0         NaN
+1     -346.38
+2     2084.49
+3     3375.96
+4     3877.40
+5    -3431.26
+6       41.66
+7    -3402.85
+8     2322.10
+9    -1761.00
+10   -1094.94
+11    1340.86
+12    -719.72
+13    -384.64
+14    -254.64
+15   -2330.61
+16    -338.42
+17    -268.80
+18     379.59
+19     290.26
+20    1216.86
+21    3234.19
+22    2299.10
+Name: close, dtype: float64
+</code></pre>
+
+<h2>Gain and loss</h2>
+
+<p>get gain and loss from change</p>
+
+<pre><code>is_gain, is_loss = change &gt; 0, change &lt; 0
+gain, loss = change, -change
+gain[is_loss] = 0
+loss[is_gain] = 0
+​
+gain.name = 'gain'
+loss.name = 'loss'
+print(loss)
+
+0         NaN
+1      346.38
+2        0.00
+3        0.00
+4        0.00
+5     3431.26
+6        0.00
+7     3402.85
+8        0.00
+9     1761.00
+10    1094.94
+11       0.00
+12     719.72
+13     384.64
+14     254.64
+15    2330.61
+16     338.42
+17     268.80
+18       0.00
+19       0.00
+20       0.00
+21       0.00
+22       0.00
+Name: loss, dtype: float64
+</code></pre>
+
+<h2>Calculate fist avg gain and loss</h2>
+
+<p>Mean of n prior rows</p>
+
+<pre><code>n = 14
+avg_gain = change * np.nan
+avg_loss = change * np.nan
+​
+avg_gain[n] = gain[:n+1].mean()
+avg_loss[n] = loss[:n+1].mean()
+​
+avg_gain.name = 'avg_gain'
+avg_loss.name = 'avg_loss'
+​
+avg_df = pd.concat([gain, loss, avg_gain, avg_loss], axis=1)
+print(avg_df)
+
+       gain     loss  avg_gain    avg_loss
+0       NaN      NaN       NaN         NaN
+1      0.00   346.38       NaN         NaN
+2   2084.49     0.00       NaN         NaN
+3   3375.96     0.00       NaN         NaN
+4   3877.40     0.00       NaN         NaN
+5      0.00  3431.26       NaN         NaN
+6     41.66     0.00       NaN         NaN
+7      0.00  3402.85       NaN         NaN
+8   2322.10     0.00       NaN         NaN
+9      0.00  1761.00       NaN         NaN
+10     0.00  1094.94       NaN         NaN
+11  1340.86     0.00       NaN         NaN
+12     0.00   719.72       NaN         NaN
+13     0.00   384.64       NaN         NaN
+14     0.00   254.64   931.605  813.959286
+15     0.00  2330.61       NaN         NaN
+16     0.00   338.42       NaN         NaN
+17     0.00   268.80       NaN         NaN
+18   379.59     0.00       NaN         NaN
+19   290.26     0.00       NaN         NaN
+20  1216.86     0.00       NaN         NaN
+21  3234.19     0.00       NaN         NaN
+22  2299.10     0.00       NaN         NaN
+</code></pre>
+
+<p>The very first calculations for average gain and the average loss is ok but I don't know how to apply pandas.core.window.Rolling.apply for the second, and subsequent because they are in many rows and different columns.
+It may be something like this:</p>
+
+<pre><code>avg_gain[n] = (avg_gain[n-1]*13 + gain[n]) / 14
+</code></pre>
+
+<h2>My Wish - My Question</h2>
+
+<ul>
+<li>The best way to calculate and work with technical indicators?</li>
+<li>Complete the above code in ""Pandas Style"".</li>
+<li>Does the traditional way of coding with loops reduce performance compared to Pandas?</li>
+</ul>
+","python,pandas,dataframe",57006437,57037866,2
+9,"How do you use EC.presence_of_element_located((By.ID, &quot;myDynamicElement&quot;)) except to specify class not ID","<p>I am trying to use Python to web scrape a website that loads it's HTML dynamically by using embedded javascript files that render the data as a Response into the HTML. Therefore, if I use BeautifulSoup alone, I will not be able to retrieve that data that I need as my program will scrape it before the Javascript loads the data. Due to this, I am integrating the selenium library into my code, to make my program wait until a certain element is found before it scrapes the website.</p>
+
+<p>I had originally done this:</p>
+
+<pre><code>element = WebDriverWait(driver,100).until(EC.presence_of_element_located((By.ID, ""tabla_evolucion"")))
+</code></pre>
+
+<p>But I want to specify a class instead by doing something like:</p>
+
+<pre><code>element = WebDriverWait(driver,100).until(EC.presence_of_element_located((By.class, ""ng-binding ng-scope"")))  
+</code></pre>
+
+<p>Here is the rest of my code:</p>
+
+<pre><code>driver_path = 'C:/webDrivers/chromedriver.exe'
+driver = webdriver.Chrome(executable_path=driver_path)
+driver.header_overrides = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36'}
+url = ""myurlthatIamscraping.com"" 
+response = driver.get(url)
+html = driver.page_source
+characters = len(html)
+element = WebDriverWait(driver,100).until(EC.presence_of_element_located((By.class, ""ng-binding ng-scope"")))
+
+print(html)
+print(characters)
+time.sleep(10)
+driver.quit()
+</code></pre>
+
+<p>It is not working for me and I can not find the right syntax anywhere.</p>
+","python,selenium,selenium-webdriver,webdriverwait,expected-condition",57262217,57313803,1
+10,XAMPP MySQL service crash after reboot,"<p>I just install a XAMPP 7.3.6-2-VC15 for Win64, and when i install it, it's fine, MySQL start from control panel without error, et all is ok.</p>
+
+<p>After rebooting my PC, Apache is still working, but MySQL refuse to start ! I try to reinstall XAMPP, but it's exactly the same. MySQL Work fine, and stop working after reboot.</p>
+
+<p>Here is THe few log i have...</p>
+
+<p>In the control panel : </p>
+
+<pre><code>09:48:10  [mysql]   Attempting to start MySQL app...
+09:48:10  [mysql]   Status change detected: running
+09:48:11  [mysql]   Status change detected: stopped
+09:48:11  [mysql]   Error: MySQL shutdown unexpectedly.
+09:48:11  [mysql]   This may be due to a blocked port, missing dependencies, 
+09:48:11  [mysql]   improper privileges, a crash, or a shutdown by another method.
+09:48:11  [mysql]   Press the Logs button to view error logs and check
+09:48:11  [mysql]   the Windows Event Viewer for more clues
+09:48:11  [mysql]   If you need more help, copy and post this
+09:48:11  [mysql]   entire log window on the forums
+</code></pre>
+
+<p>And in the log file : </p>
+
+<pre><code>2019-07-02  9:48:10 0 [Note] InnoDB: Mutexes and rw_locks use Windows interlocked functions
+2019-07-02  9:48:10 0 [Note] InnoDB: Uses event mutexes
+2019-07-02  9:48:10 0 [Note] InnoDB: Compressed tables use zlib 1.2.11
+2019-07-02  9:48:10 0 [Note] InnoDB: Number of pools: 1
+2019-07-02  9:48:10 0 [Note] InnoDB: Using SSE2 crc32 instructions
+2019-07-02  9:48:10 0 [Note] InnoDB: Initializing buffer pool, total size = 16M, instances = 1, chunk size = 16M
+2019-07-02  9:48:10 0 [Note] InnoDB: Completed initialization of buffer pool
+2019-07-02  9:48:10 0 [Note] InnoDB: Starting crash recovery from checkpoint LSN=1834407
+2019-07-02  9:48:10 0 [Note] InnoDB: 128 out of 128 rollback segments are active.
+2019-07-02  9:48:10 0 [Note] InnoDB: Removed temporary tablespace data file: ""ibtmp1""
+2019-07-02  9:48:10 0 [Note] InnoDB: Creating shared tablespace for temporary tables
+2019-07-02  9:48:10 0 [Note] InnoDB: Setting file 'C:\xampp\mysql\data\ibtmp1' size to 12 MB. Physically writing the file full; Please wait ...
+2019-07-02  9:48:10 0 [Note] InnoDB: File 'C:\xampp\mysql\data\ibtmp1' size is now 12 MB.
+2019-07-02  9:48:10 0 [Note] InnoDB: Waiting for purge to start
+2019-07-02  9:48:10 0 [Note] InnoDB: 10.3.16 started; log sequence number 1834416; transaction id 265
+2019-07-02  9:48:10 0 [Note] InnoDB: Loading buffer pool(s) from C:\xampp\mysql\data\ib_buffer_pool
+2019-07-02  9:48:10 0 [Note] InnoDB: Buffer pool(s) load completed at 190702  9:48:10
+2019-07-02  9:48:10 0 [Note] Plugin 'FEEDBACK' is disabled.
+2019-07-02  9:48:10 0 [Note] Server socket created on IP: '::'.
+</code></pre>
+
+<p>I try the following : </p>
+
+<ul>
+<li>Change port for other than 3306 => no success</li>
+<li>Run xamp control panel as admin => no success</li>
+<li>remove temporary table ibdata1 and ibtmp1 => no success</li>
+</ul>
+
+<p>If someone have an idea...</p>
+
+<p>EDIT : I try to install as a windows service via admin panel as administrator. And so, i have some new lines in log. Seems user table is corrupted... how can i repair ?</p>
+
+<pre><code>2019-07-02 10:04:41 0 [ERROR] mysqld.exe: Table '.\mysql\user' is marked as crashed and should be repaired
+2019-07-02 10:04:41 0 [ERROR] mysqld.exe: Index for table '.\mysql\user' is corrupt; try to repair it
+2019-07-02 10:04:41 0 [ERROR] Couldn't repair table: mysql.user
+2019-07-02 10:04:41 0 [ERROR] Fatal error: Can't open and lock privilege tables: Index for table 'user' is corrupt; try to repair it
+</code></pre>
+","mysql,xampp",56847804,57001732,1
+11,Git stash error &quot;Cannot save the current status&quot;,"<p>I'm getting this error when running ""git stash""</p>
+
+<pre><code>Cannot save the current status
+</code></pre>
+
+<p>with no other information.</p>
+
+<p>Why is that?</p>
+",git,56959154,56960329,1
+12,How to kubectl wait for crd creation?,"<p>What is the best method for checking to see if a custom resource definition exists before running a script, using only <code>kubectl</code> command line?</p>
+
+<p>We have a yaml file that contains definitions for a NATS cluster <code>ServiceAccount</code>, <code>Role</code>, <code>ClusterRoleBinding</code> and <code>Deployment</code>. The image used in the <code>Deployment</code> creates the <code>crd</code>, and the second script uses that <code>crd</code> to deploy a set of <code>pods</code>. At the moment our CI pipeline needs to run the second script a few times, only completing successfully once the <code>crd</code> has been fully created. I've tried to use <code>kubectl wait</code> but cannot figure out what condition to use that applies to the completion of a <code>crd</code>. </p>
+
+<p>Below is my most recent, albeit completely wrong, attempt, however this illustrates the general sequence we'd like. </p>
+
+<p><code>kubectl wait --for=condition=complete kubectl apply -f 1.nats-cluster-operator.yaml kubectl apply -f 2.nats-cluster.yaml</code></p>
+","kubernetes,azure-devops,wait,kubectl,kubernetes-custom-resources",57115602,57126479,1
+13,Is there a spark-defaults.conf when installed with pip install pyspark,"<p>I installed <code>pyspark</code> with <code>pip</code>.
+I code in <code>jupyter</code> notebooks. Everything works fine but not I got a <code>java</code> heap space error when exporting a large <code>.csv</code> file.
+<a href=""https://stackoverflow.com/questions/32336915/pyspark-java-lang-outofmemoryerror-java-heap-space"">Here</a> someone suggested editing the <code>spark-defaults.config</code>. Also in the spark documentation, it says </p>
+
+<blockquote>
+  <p>""Note: In client mode, this config must not be set through the
+  SparkConf directly in your application, because the driver JVM has
+  already started at that point. Instead, please set this through the
+  --driver-memory command line option or in your default properties file.""</p>
+</blockquote>
+
+<p>But I'm afraid there is no such file when installing <code>pyspark</code> with <code>pip</code>.
+I'm I right? How do I solve this?</p>
+
+<p>Thanks!</p>
+","pyspark,jupyter-notebook,config,heap-memory",57025924,0,1
+14,creating multiple subnets per availability zone using terraform,"<p>I am new to terraform. I want to create single public subnet and three private subnet per availability zone in particular region in AWS using terraform. I am able to create one private and public subnet per availability zone by referring the following link <a href=""https://medium.com/@maneetkum/create-subnet-per-availability-zone-in-aws-through-terraform-ea81d1ec1883"" rel=""nofollow noreferrer"">https://medium.com/@maneetkum/create-subnet-per-availability-zone-in-aws-through-terraform-ea81d1ec1883</a>. However I need to split the one private subet created into another 2. Is that possible in terraform? </p>
+
+<pre><code>data ""aws_availability_zones"" ""available"" {}resource ""aws_vpc"" ""myVpc"" {
+  cidr_block           = ""10.20.0.0/16""
+  enable_dns_hostnames = true
+  tags {
+    Name = ""myVpc""
+  }
+}
+resource ""aws_subnet"" ""public_subnet"" {
+  count = ""${length(data.aws_availability_zones.available.names)}""
+  vpc_id = ""${aws_vpc.myVpc.id}""
+  cidr_block = ""10.20.${10+count.index}.0/24""
+  availability_zone = ""${data.aws_availability_zones.available.names[count.index]}""
+  map_public_ip_on_launch = true
+  tags {
+    Name = ""PublicSubnet""
+  }
+}
+resource ""aws_subnet"" ""private_subnet"" {
+  count = ""${length(data.aws_availability_zones.available.names)}""
+  vpc_id = ""${aws_vpc.myVpc.id}""
+  cidr_block = ""10.20.${20+count.index}.0/24""
+  availability_zone= ""${data.aws_availability_zones.available.names[count.index]}""
+  map_public_ip_on_launch = false
+  tags {
+    Name = ""PrivateSubnet""
+  }
+}
+</code></pre>
+
+<p>The above code is used to create the one private and public subnet per availability zone.</p>
+","amazon-web-services,terraform,vpc",57007104,57023131,3
+15,How to replace NAs by group mean?,"<p>I have two data frames, one containing the raw data (and lots of NAs) and one containing the means of the raw data at different intervals.</p>
+
+<p>I would like to replace the NAs with the means at those intervals, while retaining the non-NAs. </p>
+
+<p>I have googled a lot on ""impute missing data r"", or ""replace missing data r"", but have yet to find any solution that seems to fit, they all either seem to replace data with 0:s, or use a way to complex method for this assignment, like using the MICE package.</p>
+
+<p>Code example: 
+This is the head of the first DF, with the raw data. As you can see, they are all NA for the first day.</p>
+
+<pre><code>   steps       date interval
+1    NA 2012-10-01        0
+2    NA 2012-10-01        5
+3    NA 2012-10-01       10
+4    NA 2012-10-01       15
+5    NA 2012-10-01       20
+6    NA 2012-10-01       25
+...
+</code></pre>
+
+<p>The second data frame head contains the mean steps per interval, like this:</p>
+
+<pre><code>  steps interval
+1 1.72          0
+2 0.340         5
+3 0.132        10
+4 0.151        15
+5 0.0755       20
+6 2.09         25
+...
+</code></pre>
+
+<p>Now, what I am looking for is to be able to fill the NAs with the mean steps for the relevant interval, so it looks like this:</p>
+
+<pre><code>   steps       date interval
+1  1.72  2012-10-01        0
+2 0.340  2012-10-01        5
+3 0.132  2012-10-01       10
+4 0.151  2012-10-01       15
+5 0.0755 2012-10-01       20
+6 2.09   2012-10-01       25
+...
+</code></pre>
+
+<p>Any tips, or links for resources I have missed? As this is a course assignment and I mostly wanna learn, any help without doing the assignment for me would be much appreciated! =)</p>
+
+<p>edit: Also, since this is my first question on Stack Overflow, any comments on how to improve my question-making is also appreciated!</p>
+","r,na,missing-data,imputation",57075688,57075941,3
+16,How to use both categorical and continuous predictors in a multiple imputation [r],"<p>I have a large dataset of a couple of categorical (nominal) variables and a number of continuous variables. Most of the continuous variables have missing data.</p>
+
+<p>I have been using the mice package (pmm and rf) to impute the missing data, however, I realised that the method is ignoring the categorical data. The categorical data could be useful for prediction. </p>
+
+<p>Therefore, I am looking for a multiple imputation code (ideally Random Forest because there is a large share of missing data) in R which allows considers both continuous and categorical predictors to impute multiple continuous variables.</p>
+","r,random-forest,categorical-data,imputation,r-mice",56935501,0,3
+17,Java 8 Streams:Why does mapToInt needs the Integer::parseInt as a parameter?,"<p>I am trying to understand something following the next example:</p>
+
+<pre><code>    Stream.of(""a1"", ""a2"", ""a3"")
+            .map(s -&gt; s.substring(1))
+            .mapToInt(Integer::parseInt)
+            .max()
+
+     . (etc.)
+</code></pre>
+
+<p>Why does mapToInt needs the </p>
+
+<pre><code>    Integer::parseInt 
+</code></pre>
+
+<p>as a parameter? Shouldn't it be implicit for it? Isn't this parameter redundant?</p>
+
+<p>Thanks!</p>
+","java,java-8,java-stream",56913567,56921679,2
+18,List of files in a google drive folder with python,"<p>I've got the exact same question as the one asked on this post: <a href=""https://stackoverflow.com/questions/53108059/list-files-and-folders-in-a-google-drive-folder"">List files and folders in a google drive folder</a>
+I don't figure out in the google drive rest api documentation how to get a list of files in a folder of google drive</p>
+","python,python-3.x,google-drive-api",56857760,58898805,3
+19,Nifi LDAP authorization - Multiple groups in search filter through wildcards,"<p>I am trying to use a search filter for Nifi authorizer via LDAP.
+The problem is that the usual search filter syntax does not seem to work.</p>
+
+<p>I currently have nifi working with one of my groups, so getting LDAP to work is not the issue.
+I was also able to make it work by using the complete paths to both groups, but I would like to use wildcards.</p>
+
+<p>So I have my AD groups as following</p>
+
+<pre><code>prod.xxxx.be
+ |--PROD
+      |--Groups TIM application entitlements
+           |--(A) Nifi - Admin
+           |--(A) Nifi - Operator
+           |--(A) Nifi - User
+</code></pre>
+
+<p>When using the following it works, and users from both groups are populated in the users list in Nifi UI;</p>
+
+<pre><code>&lt;property name=""User Search Base""&gt;OU=PROD, DC=prod, DC=xxxx, DC=be&lt;/property&gt;
+&lt;property name=""User Object Class""&gt;person&lt;/property&gt;
+&lt;property name=""User Search Scope""&gt;SUBTREE&lt;/property&gt;
+&lt;property name=""User Search Filter""&gt;(&amp;(memberof=CN=(A) Nifi - Admin, OU=Groups TIM Application Entitlements, OU=PROD, DC=prod, DC=xxxx, DC=be)(memberof=CN=(A) Nifi - User, OU=Groups TIM Application Entitlements, OU=PROD, DC=prod, DC=xxxx, DC=be))&lt;/property&gt;
+&lt;property name=""User Identity Attribute""&gt;CN&lt;/property&gt;
+&lt;property name=""User Group Name Attribute""&gt;&lt;/property&gt;
+&lt;property name=""User Group Name Attribute - Referenced Group Attribute""&gt;&lt;/property&gt;
+</code></pre>
+
+<p>But since more groups might be added, it does not seem to be very legible.
+Therefore it would be great to use wildcards.</p>
+
+<p>I tried many combinations I found at <a href=""https://social.technet.microsoft.com/wiki/contents/articles/5392.active-directory-ldap-syntax-filters.aspx"" rel=""nofollow noreferrer"">https://social.technet.microsoft.com/wiki/contents/articles/5392.active-directory-ldap-syntax-filters.aspx</a> but none seem to work for Nifi.</p>
+
+<p>Examples;</p>
+
+<pre><code>(&amp;(objectCategory=group)(cn=(A) Nifi*))
+</code></pre>
+
+<p>I even tried to escape the special characters;</p>
+
+<pre><code>(&amp;(objectCategory=group)(cn=\28A\29 Nifi*))
+</code></pre>
+
+<p>or </p>
+
+<pre><code>(&amp;amp;(objectCategory=group)(cn=\28A\29 Nifi*))
+</code></pre>
+
+<p>Since the config file for authorizers is an XML file, but no luck.</p>
+
+<p>Any advice would be greatly appreciated.</p>
+
+<p>Best regards,
+Kristof</p>
+","active-directory,ldap,apache-nifi",56836613,0,1
+20,TypeError: Invalid foreground RGBA argument,"<p>Every time I try to run the Pygame program, I get this error:</p>
+
+<blockquote>
+  <p>TypeError: Invalid foreground RGBA argument</p>
+</blockquote>
+
+<p>Here is my code, do you have any idea why ?</p>
+
+<pre class=""lang-py prettyprint-override""><code>text = font.render(b’Score:’ , dude.score, 1, (0, 0, 0))
+</code></pre>
+","python,pygame",57294067,0,3
+21,Unable to connect to server: PgAdmin 4,"<p>I have installed pgadmin on a new windows laptop and when I try to create a new server, it says:</p>
+
+<p><a href=""https://i.stack.imgur.com/YI5l3.png"" rel=""noreferrer""><img src=""https://i.stack.imgur.com/YI5l3.png"" alt=""enter image description here""></a></p>
+
+<p>When I try to run my django app in pycharm it is giving me the same error</p>
+
+<blockquote>
+  <p>could not connect to server: Connection refused (0x0000274D/10061)
+          Is the server running on host ""localhost"" (127.0.0.1) and accepting
+          TCP/IP connections on port 5432?</p>
+</blockquote>
+
+<p>How to solve this ?</p>
+","django,database-connection,pgadmin",57109494,57109810,3
+22,Understanding React useState() hook,"<p>I'm working on a functional React component using the <code>useState()</code> hook. I'm a little confused by either the way this hook should be used or the design decisions behind it.</p>
+
+<p>I made a codepen example to illustrate my question:</p>
+
+<p><a href=""https://codepen.io/svenvandescheur/pen/ewwBwR"" rel=""nofollow noreferrer"">https://codepen.io/svenvandescheur/pen/ewwBwR</a></p>
+
+<p><strong>Class based component</strong></p>
+
+<p>In a class based component, <code>this.setState({foo: 'bar'})</code> updated the state with only the keys in in the object passed to the first arguments. If the state already contained different values, those were left in place.</p>
+
+<p><strong>Functional component</strong></p>
+
+<p>I falsely assumed that the syntax and behavior of <code>setState()</code> provided by <code>useState()</code> would be very similar to its counterpart provided by <code>Component</code>. However, I noticed that <code>setState({foo: 'bar'})</code> would replace the entire state, removing keys that were not passed.</p>
+
+<p>This issue can be addressed by passing the entire state on every call to <code>setState()</code> using a spread operator, then adding the the changes afterwards, like so: <code>setState({...state, foo: 'bar'})</code>.</p>
+
+<p>This feels very repetitive, and in my real world scenario even caused a bug where new state was overriden with old state.</p>
+
+<p>My question, is whether I'm understanding <code>useState()</code> from both <code>Component</code> as <code>useState()</code> correctly, and why this behavior was chosen. And what is the currently the preferred way of dealing with state in React.</p>
+","javascript,reactjs,react-hooks,setstate",57041215,57041390,1
+23,IFrame not detecting CSS,"<p>I'm using iFrame Resizer by David J. Bradshaw.</p>
+
+<p>Load css style from parent into IFrame. The height IFrame in parent showing before css style in IFrame is loaded.</p>
+
+<p>in parent</p>
+
+<pre><code>&lt;div style=""max-width:500px;""&gt;
+    &lt;iframe src=""https://dikarier.com"" name=""dikarier"" id=""dikarier"" width=""100%"" scrolling=""no""&gt;&lt;/iframe&gt;
+&lt;/div&gt;
+
+&lt;script type=""text/javascript"" src=""iframeResizer.min.js""&gt;&lt;/script&gt;
+&lt;script type=""text/javascript""&gt;
+    iFrameResize({log:true});
+&lt;/script&gt;
+</code></pre>
+
+<p>in IFrame</p>
+
+<pre><code>&lt;p class=""HeightfromParent"" style=""padding:1em;background:#000;color:#fff;""&gt;&amp;nbsp;&lt;/p&gt;
+
+&lt;script&gt;
+window.iFrameResizer={
+    targetOrigin:'http://localhost'
+}
+&lt;/script&gt;
+&lt;script type=""text/javascript"" src=""iframeResizer.contentWindow.min.js"" defer&gt;&lt;/script&gt;
+</code></pre>
+
+<p>No error, but I need IFrame height in parent show after css style in IFrame is loaded. Please help?</p>
+","iframe,iframe-resizer",57199626,58782027,3
+24,VpnService - update network parameters,"<p>I have a VPN service, using ParcelFileDescriptor, and a builder to set the network parameters.
+Something like this code:</p>
+
+<pre><code>private Builder builder = new Builder().setSession(""myService"")
+                                       .addAddress(...)
+                                       .addDnsServer(...)
+                                       .establish()
+</code></pre>
+
+<p>Now, I want to update the network parameters (DNS server for example), while I'm connected.</p>
+
+<p>The relevant part from the documentation is this:</p>
+
+<blockquote>
+  <p>To avoid conflicts, there can be only one active VPN interface at the
+  same time. Usually network parameters are never changed during the
+  lifetime of a VPN connection. It is also common for an application to
+  create a new file descriptor after closing the previous one. However,
+  it is rare but not impossible to have two interfaces while performing
+  a seamless handover. In this case, the old interface will be
+  deactivated when the new one is created successfully. Both file
+  descriptors are valid but now outgoing packets will be routed to the
+  new interface. Therefore, after draining the old file descriptor, the
+  application MUST close it and start using the new file descriptor. If
+  the new interface cannot be created, the existing interface and its
+  file descriptor remain untouched.</p>
+</blockquote>
+
+<p>and as it said - ""Usually network parameters are never changed during the lifetime of a VPN connection"", but I do want to change them. Is it possible?</p>
+","android,android-vpn-service",57184211,0,1
+25,Embedded Kafka for testing without spring,"<p>Is there any framework/tool which can provide Embedded Kafka instance (Kafka Brokers) without any dependency of spring in Java/Scala?</p>
+
+<p>Can someone please provide a working example of it?</p>
+","java,scala,unit-testing,apache-kafka,integration-testing",57052075,0,2
+26,Angular. Build step to remove attribute from html markup,"<p>We use ""data-test"" attribute in markup to query element in tests. For example:</p>
+
+<pre><code>&lt;div data-test='myDiv'&gt;&lt;/div&gt;
+</code></pre>
+
+<p>We don't want this attribute to be present in the production build. So far I found a workaround to create a directive that in runtime removes attribute for a production build. It's for sure will cost some CPU and seems doubtful. Looking for an approach to remove the attribute in build time. Any ideas are welcome. </p>
+","html,angular,testing,webpack,angular-cli",56945990,67526086,3
+27,Animate children when hover at parent with Framer-motion,"<p>Using framer motion I want to animate my Icon component to rotate 90 degrees when hovering at the parent element which is a button.</p>
+
+<p><div class=""snippet"" data-lang=""js"" data-hide=""false"" data-console=""true"" data-babel=""false"">
+<div class=""snippet-code"">
+<pre class=""snippet-code-js lang-js prettyprint-override""><code>&lt;motion.button type=""button"" whileHover={{scale: 1.1}}&gt;
+    Visit our Industry 
+    {/*Animate this Icon to rotate 90 degrees*/}
+    &lt;Icon type=""arrow-up"" /&gt; 
+&lt;/motion.button&gt;</code></pre>
+</div>
+</div>
+</p>
+
+<p>I saw the use of variants but not sure how to really use them with props like <code>whileHover</code>.</p>
+
+<p>Any help will be appreciated since this is a new thing.</p>
+","reactjs,web-animations,react-animations,framer-motion",57125263,57719642,1
+28,Where can I find the lua script of a Co-Simulation model in OMSimulator (OpenModelica)?,"<p>I am trying to run a co-simulation model using OMSimulator. I managed to create a FMU from a TRNSYS model thanks to this tool: <a href=""https://sourceforge.net/projects/trnsys-fmu/"" rel=""nofollow noreferrer"">https://sourceforge.net/projects/trnsys-fmu/</a></p>
+
+<p>When I import it, I get the following error: </p>
+
+<p>[2] 12:23:32 Scripting Error
+[fmiLogger] module FMI2XML: Start attribute is required for this causality, variability and initial combination</p>
+
+<p>It seems that I need to initialize some variables (not sure about what) in the OMSimulator command line. I think that it is the Lua script I heard about, but I cannot really find it.</p>
+
+<p>I would really appreciate it someone could help me on this, since the documentation (<a href=""https://openmodelica.org/doc/OMSimulator/v2.0.1/html/OMSimulator.html"" rel=""nofollow noreferrer"">https://openmodelica.org/doc/OMSimulator/v2.0.1/html/OMSimulator.html</a>) it is not enough for my level.</p>
+
+<p>Thanks!!!</p>
+",openmodelica,56885918,0,3
+29,"Why does my python serial code not work, while sending the same data from the arduino serial monitor does?","<p>I have an arduino that reads in two ints over a serial connection when I send the data from the arduino serial monitor it works as it should, but no matter what I do I can't get it to work when I send the same data from python using pySerial, I have been at this hours and have gotten nowhere </p>
+
+<p>I have tried encoding the data as utf8, different encodings flushing the output buffer and have read too many other similar stackoverflow Q&amp;As to count </p>
+
+<p>I am using python 3.7.1 in Windows 10 but the code will untimately be running on a Rpi</p>
+
+<pre class=""lang-py prettyprint-override""><code>import os
+import time
+import serial
+ser = serial.Serial('COM7', baudrate=9600, parity=serial.PARITY_NONE, stopbits=serial.STOPBITS_ONE, bytesize=serial.EIGHTBITS, timeout=5)
+print(""writting"")
+time.sleep(0.5)
+ser.write(b'4,5')
+ser.write(b'\r\n')
+time.sleep(0.5)
+ser.flushOutput()
+ser.close()
+</code></pre>
+
+<pre><code>
+#include &lt;SoftwareSerial.h&gt;
+byte buttonPin = 9;
+const int pin_led = LED_BUILTIN; // Pin for indication LED
+int sensorPin = A0;
+int sensorValue = 0;
+int remotePower = 0;  
+
+SoftwareSerial mySerial(11, 12); // RX, TX
+
+void setup()
+{
+  pinMode(pin_led, OUTPUT); // Set LED pin as output
+  Serial.begin(9600);
+  mySerial.begin(9600);
+  pinMode(buttonPin, INPUT_PULLUP);
+}
+
+int oldremotePower = 0; 
+
+void loop()
+{
+  // if there's any serial available, read it:
+  while (Serial.available() &gt; 0) {
+    Serial.println(""theres Data"");
+    // look for the next valid integer in the incoming serial stream:
+    int mode = Serial.parseInt();
+    // do it again:
+    int action = Serial.parseInt();
+    // do it again:
+    //int blue = Serial.parseInt();
+
+    // look for the newline. That's the end of your sentence:
+    if (Serial.read() == '\n') {
+      // constrain the values to 0 - 255 and invert
+      // if you're using a common-cathode LED, just use ""constrain(color, 0, 255);""
+      mode = constrain(mode, 1, 4);
+      action =  constrain(action, 0, 100);
+
+      mySerial.print(mode);
+      mySerial.print("","");
+      mySerial.println(action);
+    }
+  }
+
+
+    oldremotePower = remotePower;
+    sensorValue = analogRead(sensorPin);
+    remotePower = map(sensorValue, 0, 1023, 1, 100);
+    if (oldremotePower != remotePower){
+      //Serial.println(oldremotePower);
+      //Serial.println(remotePower);
+        }
+
+  if (digitalRead(buttonPin) == LOW) {
+    mySerial.println(remotePower);
+  }
+}
+</code></pre>
+
+<p>I send ""1,100"" from the arduino serial monitor and the uno responds with ""theres Data"" and on the software serial it prints the values it was just sent
+this works but when I try to send ""1,100\r"" from my python script nothing happens the script runs without error the Rx led on the uno flashes but there is no output on the software serial port It must be something wrong with my python serial code.</p>
+","python,serialization,arduino,pyserial",57120508,0,3
+30,sweet alert2: how to get autofocus on input?,"<p>using <a href=""https://sweetalert2.github.io/"" rel=""nofollow noreferrer"">sweetalert2@8</a></p>
+
+<p>Using sweet alert for a search box with below code. Autofocus works on Chrome but not on Safari &amp; Firefox. How can we fix this?</p>
+
+<pre><code>swal.fire({
+    // title: ""Search"",
+    type: ""question"",
+    html: '&lt;form id=""searchForm"" method=""post"" action=""/search""&gt;' +
+        ""&lt;input type='hidden' /&gt;"" +
+        '&lt;input autofocus class=""form-control"" type=""text"" name=""search_box"" placeholder=""Seach...""&gt;&lt;/form&gt;',
+    confirmButtonText: ""Search"",
+    showLoaderOnConfirm: true,
+    preConfirm: function (value) {
+        document.getElementById(""searchForm"").submit();
+        return new Promise(resolve =&gt; {
+        })
+    },
+});
+</code></pre>
+","javascript,sweetalert2",56914650,56914899,3
+31,how to get geofense request id in geotrasition service class,"<p>Here i put geofense logic for create,start,remove,clear geofense but i want to get request id to do some task on id when it enter in range
+activity</p>
+
+<pre><code>// Start Geofence creation process
+private void startGeofence() {
+    Log.i(TAG, ""startGeofence()"");
+    if( geoFenceMarker != null ) {
+        Geofence geofence = createGeofence( geoFenceMarker.getPosition(), GEOFENCE_RADIUS );
+        GeofencingRequest geofenceRequest = createGeofenceRequest( geofence );
+        addGeofence( geofenceRequest );
+    } else {
+        Log.e(TAG, ""Geofence marker is null"");
+    }
+}
+
+private static final long GEO_DURATION = 60 * 60 * 1000;
+private static final String GEOFENCE_REQ_ID = ""My Geofence"";
+private static final float GEOFENCE_RADIUS = 500.0f; // in meters
+
+
+
+// Create a Geofence
+private Geofence createGeofence( LatLng latLng, float radius ) {
+    String uid = uuid.randomuuid().tostring();
+    Log.d(TAG, ""createGeofence"");
+    return new Geofence.Builder()
+            .setRequestId(uid)
+            .setCircularRegion( latLng.latitude, latLng.longitude, radius)
+            .setExpirationDuration( GEO_DURATION )
+            .setTransitionTypes( Geofence.GEOFENCE_TRANSITION_ENTER
+                    | Geofence.GEOFENCE_TRANSITION_EXIT )
+            .build();
+}
+
+// Create a Geofence Request
+private GeofencingRequest createGeofenceRequest( Geofence geofence ) {
+    Log.d(TAG, ""createGeofenceRequest"");
+    return new GeofencingRequest.Builder()
+            .setInitialTrigger( GeofencingRequest.INITIAL_TRIGGER_ENTER )
+            .addGeofence( geofence )
+            .build();
+}
+
+private PendingIntent geoFencePendingIntent;
+private final int GEOFENCE_REQ_CODE = 0;
+private PendingIntent createGeofencePendingIntent() {
+    Log.d(TAG, ""createGeofencePendingIntent"");
+    if ( geoFencePendingIntent != null )
+        return geoFencePendingIntent;
+
+    Intent intent = new Intent( this, GeofenceTrasitionService.class);
+    return PendingIntent.getService(
+            this, GEOFENCE_REQ_CODE, intent, PendingIntent.FLAG_UPDATE_CURRENT );
+}
+
+// Add the created GeofenceRequest to the device's monitoring list
+private void addGeofence(GeofencingRequest request) {
+    Log.d(TAG, ""addGeofence"");
+    if (checkPermission())
+        LocationServices.GeofencingApi.addGeofences(
+                googleApiClient,
+                request,
+                createGeofencePendingIntent()
+        ).setResultCallback(this);
+}
+
+@Override
+public void onResult(@NonNull Status status) {
+    Log.i(TAG, ""onResult: "" + status);
+    if ( status.isSuccess() ) {
+        saveGeofence();
+        drawGeofence();
+    } else {
+        // inform about fail
+    }
+}
+
+// Draw Geofence circle on GoogleMap
+private Circle geoFenceLimits;
+private void drawGeofence() {
+    Log.d(TAG, ""drawGeofence()"");
+
+    if ( geoFenceLimits != null )
+        geoFenceLimits.remove();
+
+    CircleOptions circleOptions = new CircleOptions()
+            .center( geoFenceMarker.getPosition())
+            .strokeColor(Color.argb(50, 70,70,70))
+            .fillColor( Color.argb(100, 150,150,150) )
+            .radius( GEOFENCE_RADIUS );
+    geoFenceLimits = map.addCircle( circleOptions );
+}
+
+private final String KEY_GEOFENCE_LAT = ""GEOFENCE LATITUDE"";
+private final String KEY_GEOFENCE_LON = ""GEOFENCE LONGITUDE"";
+
+// Saving GeoFence marker with prefs mng
+private void saveGeofence() {
+    Log.d(TAG, ""saveGeofence()"");
+    SharedPreferences sharedPref = getPreferences( Context.MODE_PRIVATE );
+    SharedPreferences.Editor editor = sharedPref.edit();
+
+    editor.putLong( KEY_GEOFENCE_LAT, Double.doubleToRawLongBits( geoFenceMarker.getPosition().latitude ));
+    editor.putLong( KEY_GEOFENCE_LON, Double.doubleToRawLongBits( geoFenceMarker.getPosition().longitude ));
+    editor.apply();
+}
+
+// Recovering last Geofence marker
+private void recoverGeofenceMarker() {
+    Log.d(TAG, ""recoverGeofenceMarker"");
+    SharedPreferences sharedPref = getPreferences( Context.MODE_PRIVATE );
+
+    if ( sharedPref.contains( KEY_GEOFENCE_LAT ) &amp;&amp; sharedPref.contains( KEY_GEOFENCE_LON )) {
+        double lat = Double.longBitsToDouble( sharedPref.getLong( KEY_GEOFENCE_LAT, -1 ));
+        double lon = Double.longBitsToDouble( sharedPref.getLong( KEY_GEOFENCE_LON, -1 ));
+        LatLng latLng = new LatLng( lat, lon );
+        markerForGeofence(latLng);
+        drawGeofence();
+    }
+}
+
+// Clear Geofence
+private void clearGeofence() {
+    Log.d(TAG, ""clearGeofence()"");
+    LocationServices.GeofencingApi.removeGeofences(
+            googleApiClient,
+            createGeofencePendingIntent()
+    ).setResultCallback(new ResultCallback&lt;Status&gt;() {
+        @Override
+        public void onResult(@NonNull Status status) {
+            if ( status.isSuccess() ) {
+                // remove drawing
+                removeGeofenceDraw();
+            }
+        }
+    });
+}
+
+private void removeGeofenceDraw() {
+    Log.d(TAG, ""removeGeofenceDraw()"");
+    if ( geoFenceMarker != null)
+        geoFenceMarker.remove();
+    if ( geoFenceLimits != null )
+        geoFenceLimits.remove();
+}
+</code></pre>
+
+<p>geotrasition service class</p>
+
+<pre><code>public class GeofenceTrasitionService extends IntentService {
+
+private static final String TAG = GeofenceTrasitionService.class.getSimpleName();
+
+public static final int GEOFENCE_NOTIFICATION_ID = 0;
+
+public GeofenceTrasitionService() {
+    super(TAG);
+}
+
+@Override
+protected void onHandleIntent(Intent intent) {
+    GeofencingEvent geofencingEvent = GeofencingEvent.fromIntent(intent);
+    // Handling errors
+    if ( geofencingEvent.hasError() ) {
+        String errorMsg = getErrorString(geofencingEvent.getErrorCode() );
+        Log.e( TAG, errorMsg );
+        return;
+    }
+
+    int geoFenceTransition = geofencingEvent.getGeofenceTransition();
+    // Check if the transition type is of interest
+    if ( geoFenceTransition == Geofence.GEOFENCE_TRANSITION_ENTER ||
+            geoFenceTransition == Geofence.GEOFENCE_TRANSITION_EXIT ) {
+        // Get the geofence that were triggered
+        List&lt;Geofence&gt; triggeringGeofences = geofencingEvent.getTriggeringGeofences();
+
+        String geofenceTransitionDetails = getGeofenceTrasitionDetails(geoFenceTransition, triggeringGeofences );
+
+        // Send notification details as a String
+        sendNotification( geofenceTransitionDetails );
+    }
+}
+
+
+private String getGeofenceTrasitionDetails(int geoFenceTransition, List&lt;Geofence&gt; triggeringGeofences) {
+    // get the ID of each geofence triggered
+    ArrayList&lt;String&gt; triggeringGeofencesList = new ArrayList&lt;&gt;();
+    for ( Geofence geofence : triggeringGeofences ) {
+        triggeringGeofencesList.add( geofence.getRequestId() );
+    }
+
+    String status = null;
+    if ( geoFenceTransition == Geofence.GEOFENCE_TRANSITION_ENTER )
+        status = ""Entering "";
+    else if ( geoFenceTransition == Geofence.GEOFENCE_TRANSITION_EXIT )
+        status = ""Exiting "";
+    return status + TextUtils.join( "", "", triggeringGeofencesList);
+}
+
+private void sendNotification( String msg ) {
+    Log.i(TAG, ""sendNotification: "" + msg );
+
+    // Intent to start the main Activity
+    Intent notificationIntent = MainActivity.makeNotificationIntent(
+            getApplicationContext(), msg
+    );
+
+    TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+    stackBuilder.addParentStack(MainActivity.class);
+    stackBuilder.addNextIntent(notificationIntent);
+    PendingIntent notificationPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+
+
+    // Creating and sending Notification
+    NotificationManager notificatioMng =
+            (NotificationManager) getSystemService( Context.NOTIFICATION_SERVICE );
+    notificatioMng.notify(
+            GEOFENCE_NOTIFICATION_ID,
+            createNotification(msg, notificationPendingIntent));
+
+}
+
+// Create notification
+private Notification createNotification(String msg, PendingIntent notificationPendingIntent) {
+    NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this);
+    notificationBuilder
+            .setSmallIcon(R.drawable.ic_action_location)
+            .setColor(Color.RED)
+            .setContentTitle(msg)
+            .setContentText(""Geofence Notification!"")
+            .setContentIntent(notificationPendingIntent)
+            .setDefaults(Notification.DEFAULT_LIGHTS | Notification.DEFAULT_VIBRATE | Notification.DEFAULT_SOUND)
+            .setAutoCancel(true);
+    return notificationBuilder.build();
+}
+
+
+private static String getErrorString(int errorCode) {
+    switch (errorCode) {
+        case GeofenceStatusCodes.GEOFENCE_NOT_AVAILABLE:
+            return ""GeoFence not available"";
+        case GeofenceStatusCodes.GEOFENCE_TOO_MANY_GEOFENCES:
+            return ""Too many GeoFences"";
+        case GeofenceStatusCodes.GEOFENCE_TOO_MANY_PENDING_INTENTS:
+            return ""Too many pending intents"";
+        default:
+            return ""Unknown error."";
+    }
+}
+}
+</code></pre>
+
+<p>when i create geofense i want to put uuid every time i want to createfense and want to retrive that request id in geotransition srevice class</p>
+","java,android,geofencing",57180856,0,1
+32,How can I add Default list in dropdown then use my search input to filter that list in SSRS Report,"<p>I've created a dropdown list that is filtered according the value present in a search box .
+But the issue is untill I enter the value in Search box the dropdown is in disabled state.
+Is there any way that i can get the whole list by default on load and then i use my search box to filter the list.</p>
+","dropdown,ssrs-2012,searchable",57175633,57181115,1
+33,Find LDAP user in nested group through Java,"<p>Nothing I've found is working for me. And I'm having trouble finding answers that have valid code and aren't simply pasting a search filter string from another site.</p>
+
+<p>The relevant code that's trying to do the search is:</p>
+
+<pre><code>SearchResult sr = executeSearchSingleResult(ctx, SearchControls.SUBTREE_SCOPE, ""dc=mydomain,dc=local"", ""(&amp;(objectClass=person)(sAMAccountName=admin2))"", new String[]{""memberOf""});
+if (sr != null) {
+    Attribute memberOf = sr.getAttributes().get(""memberOf"");
+    if (memberOf != null) {
+        for (int i = 0; i &lt; memberOf.size(); i++) {
+            Attributes attributes = ctx.getAttributes(memberOf.get(i).toString(), new String[]{""CN""});
+            Attribute attribute = attributes.get(""CN"");
+            if (attribute != null) {
+                log.info(""member of : "" + attribute.get(0));
+            }
+        }
+        for (Enumeration e1 = memberOf.getAll(); e1.hasMoreElements();) {
+            String unprocessedGroupDN = e1.nextElement().toString();
+            String unprocessedGroupCN = getCN(unprocessedGroupDN);
+            //checking something here
+        }
+    }
+}
+
+private static SearchResult executeSearchSingleResult(DirContext ctx, int searchScope, String searchBase, String searchFilter, String[] attributes) throws NamingException {
+    NamingEnumeration result = executeSearch(ctx, searchScope, searchBase, searchFilter, attributes);
+    SearchResult sr = null;
+    try {
+        while (result.hasMoreElements()) {
+            sr = (SearchResult) result.next();
+            break;
+        }
+    } catch (Exception e) {
+        log.error(e, e);
+    }
+    return sr;
+}
+
+private static NamingEnumeration executeSearch(DirContext ctx, int searchScope, String searchBase, String searchFilter, String[] attributes) throws NamingException {
+    SearchControls searchCtls = new SearchControls();
+    if (attributes != null) {
+        searchCtls.setReturningAttributes(attributes);
+    }
+    searchCtls.setSearchScope(searchScope);
+    NamingEnumeration result = ctx.search(searchBase, searchFilter, searchCtls);
+    return result;
+}
+</code></pre>
+
+<p>This works fine when there are no nested groups. But say I have the following structure of groups and users:</p>
+
+<pre><code>My Admins (dn = CN=My Admins,CN=Users,DC=mydomain,DC=local)
+    AdminUser1 (dn = CN=AdminUser 1,CN=Users,DC=mydomain,DC=local)
+        AdminGroup1 (dn = CN=AdminGroup 1,CN=Users,DC=,mydomain,DC=local)
+            AdminUser2 (dn = CN=AdminUser 2,CN=Users,DC=mydomain,DC=local)
+</code></pre>
+
+<p>This finds AdminUser1 just fine. It cannot find AdminUser2. What I need to do, is discover that AdminUser2 goes all the way back up to the highest level group called <code>My Admins</code>.</p>
+
+<p>I found a lot of references to <code>1.2.840.113556.1.4.1941</code>, but different ways of putting that into the search filter have not helped.</p>
+
+<p>What do I need to change in the code and/or the search filter to glean that a particular user at any particular depth of group nesting goes all the way back up to the topmost group?</p>
+","java,active-directory,ldap",56998316,0,1
+34,Oracle Forms Messages are not Shown Except Status Line,"<p>I want to show custom messages in my form. There are two buttons in different datablocks. When I write 
+        ""MESSAGE ('Button 1!');""
+in WHEN-BUTTON-PRESS trigger of Button 1, it shows message. 
+But when I write<br>
+        ""MESSAGE ('Button 2!');""
+in WHEN-BUTTON-PRESS trigger of Button 2, it doesn't show message (it shows message just on status line). 
+And if I write my message two time as 
+        ""MESSAGE ('Button 2!'); MESSAGE ('Button 2!');""
+it shows messages. Why? How I can I do?</p>
+","oracle,oracleforms",57141375,0,2
+35,React-DatePicker - Format not Defined,"<p>I Tried to Implement React Datepicker Function number 32 <a href=""https://reactdatepicker.com/"" rel=""nofollow noreferrer"">https://reactdatepicker.com/</a>.</p>
+<p>Here is the Documentation Code they provided</p>
+<p><div class=""snippet"" data-lang=""js"" data-hide=""false"" data-console=""true"" data-babel=""false"">
+<div class=""snippet-code"">
+<pre class=""snippet-code-js lang-js prettyprint-override""><code>handleChange (date) {
+  this.setState({startDate: date})
+  this.toggleCalendar()
+}
+
+toggleCalendar (e) {
+  e &amp;&amp; e.preventDefault()
+  this.setState({isOpen: !this.state.isOpen})
+}
+
+&lt;div&gt;
+    &lt;button
+        className=""example-custom-input""
+        onClick={this.toggleCalendar}
+        {format(this.state.startDate, ""dd-MM-yyyy"")}
+    &lt;/button&gt;
+    {
+        this.state.isOpen &amp;&amp; (
+            &lt;DatePicker
+                selected={this.state.startDate}
+                onChange={this.handleChange}
+                withPortal
+                inline /&gt;
+        )
+    }
+&lt;/div&gt;</code></pre>
+</div>
+</div>
+</p>
+<p>What My Problem is, &quot;Format is not defined&quot; error gets throwing.
+what mistake i made here?<br />
+Please Help.</p>
+","reactjs,react-datepicker",56889104,56889677,3
+36,Is there an alternative for --rebaseRootRelativeCssUrls option in Angular CLI 8?,"<p>I had a lot of issues because my application is hosted inside a subfolder and for that reason the relative <code>/assets/</code> path, which is referenced inside <code>.scss</code> files, doesn't work. 
+The solution was to enable the <code>--rebaseRootRelativeCssUrls</code> option to get the expected behaviour. With that option, the build process has adjusted my <code>/assets/</code> paths by injecting the ""--base-href"" value and now the referenced images and fonts are loading correctly.</p>
+
+<p>However, I see in the documentation that the option is deprecated and it will be removed in the next major release.</p>
+
+<p><a href=""https://angular.io/cli/build"" rel=""noreferrer"">https://angular.io/cli/build</a> (search for <code>--rebaseRootRelativeCssUrls</code>)</p>
+
+<p>So my question is, what is the alternative, is there any other way to get the same result?</p>
+","angular,angular-cli",56969945,0,3
+37,AspNetCore.deps.json including runtimes/win/lib/netcoreapp2.1/System.Data.SqlClient.dll reference,"<p>I have been chasing an issue with a AspNetCore web api project running on an Azure app service for a few days.</p>
+
+<p>Basically I have a very small api project that when deployed / started - I get a 500.30 ANCM error.  Cryptic enough - I pulled the event log from the app service and I find this:</p>
+
+<pre><code>&lt;Data&gt;Could not find inprocess request handler. 
+     Captured output from invoking hostfxr: Error:
+     An assembly specified in the application dependencies manifest 
+     (SampleApp.Api.deps.json) was not found:
+    package: 'System.Data.SqlClient', version: '4.6.1'
+    path: 'runtimes/win/lib/netcoreapp2.1/System.Data.SqlClient.dll'
+&lt;/Data&gt;
+</code></pre>
+
+<p>Looking at the SampleApp.deps.json - sure enough I see this:</p>
+
+<pre><code>""runtimeTargets"": {
+      ""runtimes/unix/lib/netcoreapp2.1/System.Data.SqlClient.dll"": {
+        ""rid"": ""unix"",
+        ""assetType"": ""runtime"",
+        ""assemblyVersion"": ""4.5.0.1"",
+        ""fileVersion"": ""4.6.27618.1""
+      },
+      ""runtimes/win/lib/netcoreapp2.1/System.Data.SqlClient.dll"": {
+        ""rid"": ""win"",
+        ""assetType"": ""runtime"",
+        ""assemblyVersion"": ""4.5.0.1"",
+        ""fileVersion"": ""4.6.27618.1""
+      }
+    },
+</code></pre>
+
+<p>I have a similar (almost identical) project that is running fine on another app service. If run the </p>
+
+<pre><code>dotnet publish -c release /property:PublishWithAspNetCoreTargetManifest=true 
+</code></pre>
+
+<p>(the same publish command I am running with the app I am having an issue with)</p>
+
+<p>I do not see this section in the runtime targets section at all in the <em>otherapp.deps.json</em> file.</p>
+
+<p>Where is this coming from and how do I get rid of it?</p>
+","asp.net-core,configuration,runtime",57126312,0,3
+38,Does zkteco have a web API?,"<p>I am trying to build a java application which will fetch the data of <strong>zkteco biometric</strong>.</p>
+<p>Does <strong>zkteco</strong> have a built-in API ?</p>
+<p>If not, how can I connect to <strong>zkteco</strong> to a java app?</p>
+","api,zkteco",57196831,0,2
+39,Parity error not always being detected in serial port,"<p>I have a serial port class in netcore - it just listens to the port and tries to detect parity errors. Parity is set to space, and all incoming bytes are being sent with parity=mark which should result in a parity error.
+Unfortunately, this is being detected only about a 1/3 of times. I need this detection because this is how the protocol states the beginning of a message.
+bytes (80 and 81) are being sent every 1 second so the buffer should always have 1 byte.</p>
+
+<p>What am I doing wrong?</p>
+
+<pre><code>// Use this code inside a project created with the Visual C# &gt; Windows Desktop &gt; Console Application template.
+// Replace the code in Program.cs with this code.
+
+using System;
+using System.Collections.Generic;
+using System.IO.Ports;
+using System.Threading;
+using SASComms;
+
+public class PortChat
+{
+    static bool _continue;
+    static SASSerialPort _serialPort;
+    static object msgsLock = new object();
+    static Queue&lt;byte[]&gt; msgs = new Queue&lt;byte[]&gt;();
+    static Queue&lt;byte&gt; receiveQeue = new Queue&lt;byte&gt;();
+    public static void Main()
+    {
+        string name;
+        string message;
+        StringComparer stringComparer = StringComparer.OrdinalIgnoreCase;
+        Thread readThread = new Thread(Read);
+
+        // Create a new SerialPort object with default settings.
+        _serialPort = new MachineSerialPort();
+
+        // Allow the user to set the appropriate properties.
+        _serialPort.PortName = ""COM2"";
+        _serialPort.BaudRate = 19200;
+        _serialPort.ParityReplace = (byte)'\0' ;
+        _serialPort.ReadBufferSize = 128;
+        _serialPort.Parity = Parity.Space;
+        _serialPort.DataBits = 8;
+        _serialPort.StopBits = StopBits.One;
+        _serialPort.Handshake = Handshake.None;
+        // Set the read/write timeouts
+        _serialPort.ReadTimeout = 5;
+        _serialPort.WriteTimeout = 5;
+        _serialPort.ErrorReceived +=  new SerialErrorReceivedEventHandler(sp_SerialErrorReceivedEventHandler);
+
+        _serialPort.Open();
+        _continue = true;
+        readThread.Start();
+    }
+
+    public static void sp_SerialErrorReceivedEventHandler(Object sender, SerialErrorReceivedEventArgs e)
+    {
+        if (e.EventType == SerialError.RXParity)
+        {
+            Console.WriteLine(""Parity error"");
+        }
+    }
+
+    public static void Read()
+    {
+        while (_continue)
+        {
+            try
+            {
+
+                    while (_serialPort.BytesToRead &gt; 0)
+                    {
+                     receiveQeue.Enqueue((byte)_serialPort.ReadByte());
+                }
+
+                if (receiveQeue.Count &gt; 0)
+                {
+                    foreach (byte r in receiveQeue)
+                    {
+                        Console.Write(r.ToString(""X"")+"" "" );
+                        Console.WriteLine();
+                        }
+                    }
+                }
+                receiveQeue.Clear();
+            }
+            catch (TimeoutException) { }
+        }
+    }
+}
+</code></pre>
+
+<p>The console is outputing this:</p>
+
+<pre><code>80
+Parity error
+81
+80
+Parity error
+81
+Parity error
+80
+Parity error
+81
+80
+Parity error
+81
+80
+81
+80
+81
+Parity error
+80
+Parity error
+81
+80
+Parity error
+</code></pre>
+
+<p>And I'm expecting ""Parity error"" after each byte.</p>
+","c#,.net-core,serial-port",57102238,57212626,1
+40,how to share public S3 bucket with external user?,"<p>I work in a company and a client will drop files into one of our s3 buckets. How do we tell them which one?</p>
+
+<p>I keep looking at AWS documentation that describes how to make a bucket public and IAM policies. I already did that. </p>
+
+<p>Now, how to share that? When I go to the bucket properties, there's a ""Copy Bucket ARN"" button. That just gives me: </p>
+
+<pre><code>arn:aws:s3:::&lt;bucket-name&gt;
+</code></pre>
+
+<p>The real task is to share only with the client. Right now I'm just trying to do this simple test. </p>
+
+<p>I'm not sure if they will drop the file manually or programmatically. </p>
+","amazon-web-services,amazon-s3",56978017,56978061,3
+41,"Keras, Tensorflow are reserving all GPU memory on model build","<p>my GPU is NVIDIA RTX 2080 TI</p>
+
+<p>Keras 2.2.4</p>
+
+<p>Tensorflow-gpu 1.12.0</p>
+
+<p>CUDA 10.0</p>
+
+<p>Once I load build a model ( before compilation ), I found that GPU memory is fully allocated</p>
+
+<p>[0] GeForce RTX 2080 Ti | 50'C,  15 % | 10759 / 10989 MB | issd/8067(10749M)</p>
+
+<p>What could be the reason, how can i debug it?</p>
+
+<p>I don't have spare memory to load the data even if I load via generators</p>
+
+<p>I have tried to monitor the GPUs memory usage found out it is full just after building the layers (before compiling model)</p>
+","python-3.x,tensorflow,keras",57058071,0,3
+42,Grab image of workspace 2 while in workspace 1 using Pyscreenshot,"<p>I am on Ubuntu 18.04, I want to take a screenshot of Workspace 2 while I am in 1 without changing to workspace2. I want to use a Python script/command.</p>
+<p>If a certain event happens I want to move to workspace2.</p>
+<p>Is taking a screenshot like this possible?</p>
+",python,57274304,0,1
+43,How to combine create and edit page in react-admin,"<p>I am new for the react and react-admin, but I am now using it in our project, everything is good, but there is one thing I don't know how to make it. in our application. the create and edit page almost same, the only difference is some fields are disabled in edit view, so I want to combine create and edit, is there any document about it. I searched it but it seems not an easy way to do it, it's appreciated if can get some sample code. thank you !!!</p>
+
+<p>Hi @Mads, thank you for your answer, I update the question here.  what I mean is last time, i also create a separate form like what you did and I insert the component directly as below (e.g. <strong><code>&lt;Form/&gt;</code></strong>). it will get an error: <strong>the invalid value for prop ‘save’ on  tag</strong>
+I am just curious what's the difference with this way (<strong><code>{form('edit')}</code></strong>)</p>
+
+<p><code>&lt;Edit {...props} undoable={false} style={{width: '100%'}}&gt; &lt;Form/&gt; &lt;/Edit&gt;</code> </p>
+",react-admin,57132260,0,2
+44,Why do I get a NoClassDefFound error when I try to save my test plan?,"<p>I installed apache-jmeter-5.1.1 and java 1.8.0_221 (8), and was walking through the <a href=""https://jmeter.apache.org/usermanual/build-web-test-plan.html"" rel=""nofollow noreferrer"">getting started guide</a> to build a web test plan in the GUI. But when I click save to save the Test Plan I receive the below error:</p>
+<blockquote>
+<p>Uncaught Exception java.lang.NoClassDefFoundError: Could not initialize class org.apache.jmeter.gui.util.FileDialoger. See log file for details.</p>
+</blockquote>
+<p>Full Output in debugger:</p>
+<pre><code>2019-07-24 15:30:13,306 ERROR o.a.j.JMeter: Uncaught exception: 
+java.lang.NoClassDefFoundError: Could not initialize class org.apache.jmeter.gui.util.FileDialoger
+    at org.apache.jmeter.gui.action.Save.computeFileName(Save.java:203) ~[ApacheJMeter_core.jar:5.1.1 r1855137]
+    at org.apache.jmeter.gui.action.Save.doAction(Save.java:165) ~[ApacheJMeter_core.jar:5.1.1 r1855137]
+    at org.apache.jmeter.gui.action.ActionRouter.performAction(ActionRouter.java:88) ~[ApacheJMeter_core.jar:5.1.1 r1855137]
+    at org.apache.jmeter.gui.action.ActionRouter.lambda$actionPerformed$0(ActionRouter.java:70) ~[ApacheJMeter_core.jar:5.1.1 r1855137]
+    at java.awt.event.InvocationEvent.dispatch(Unknown Source) ~[?:1.8.0_221]
+    at java.awt.EventQueue.dispatchEventImpl(Unknown Source) ~[?:1.8.0_221]
+    at java.awt.EventQueue.access$500(Unknown Source) ~[?:1.8.0_221]
+    at java.awt.EventQueue$3.run(Unknown Source) ~[?:1.8.0_221]
+    at java.awt.EventQueue$3.run(Unknown Source) ~[?:1.8.0_221]
+    at java.security.AccessController.doPrivileged(Native Method) ~[?:1.8.0_221]
+    at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source) ~[?:1.8.0_221]
+    at java.awt.EventQueue.dispatchEvent(Unknown Source) ~[?:1.8.0_221]
+    at java.awt.EventDispatchThread.pumpOneEventForFilters(Unknown Source) [?:1.8.0_221]
+    at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source) [?:1.8.0_221]
+    at java.awt.EventDispatchThread.pumpEventsForHierarchy(Unknown Source) [?:1.8.0_221]
+    at java.awt.EventDispatchThread.pumpEvents(Unknown Source) [?:1.8.0_221]
+    at java.awt.EventDispatchThread.pumpEvents(Unknown Source) [?:1.8.0_221]
+    at java.awt.EventDispatchThread.run(Unknown Source) [?:1.8.0_221]
+</code></pre>
+<p>Any idea how to resolve?</p>
+","java,windows,jmeter,windows-10,jmeter-5.0",57190107,57194888,3
+45,Testing asynchronous useEffect,"<p>My functional component uses the <code>useEffect</code> hook to fetch data from an API on mount. I want to be able to test that the fetched data is displayed correctly.</p>
+
+<p>While this works fine in the browser, the tests are failing because the hook is asynchronous the component doesn't update in time.</p>
+
+<p>Live code:
+<a href=""https://codesandbox.io/s/peaceful-knuth-q24ih?fontsize=14"" rel=""noreferrer"">https://codesandbox.io/s/peaceful-knuth-q24ih?fontsize=14</a></p>
+
+<p><strong>App.js</strong></p>
+
+<pre><code>import React from ""react"";
+
+function getData() {
+  return new Promise(resolve =&gt; {
+    setTimeout(() =&gt; resolve(4), 400);
+  });
+}
+
+function App() {
+  const [members, setMembers] = React.useState(0);
+
+  React.useEffect(() =&gt; {
+    async function fetch() {
+      const response = await getData();
+
+      setMembers(response);
+    }
+
+    fetch();
+  }, []);
+
+  return &lt;div&gt;{members} members&lt;/div&gt;;
+}
+
+export default App;
+</code></pre>
+
+<p><strong>App.test.js</strong></p>
+
+<pre><code>import App from ""./App"";
+import React from ""react"";
+import { mount } from ""enzyme"";
+
+describe(""app"", () =&gt; {
+  it(""should render"", () =&gt; {
+    const wrapper = mount(&lt;App /&gt;);
+
+    console.log(wrapper.debug());
+  });
+});
+</code></pre>
+
+<p>Besides that, Jest throws a warning saying:
+<code>Warning: An update to App inside a test was not wrapped in act(...).</code></p>
+
+<p>I guess this is related? How could this be fixed?</p>
+","javascript,reactjs,jestjs,enzyme",57006369,0,1
+46,Unable to click on &#39;more&#39; button cyclically to get all the full reviews,"<p>I've created a script in python in combination with selenium to fetch all the reviews from a certain page of google maps. There are lots of reviews in that page and they are only visible once that page is made to scroll downward. My script can do all of them successfully. </p>
+
+<p>However, the only issue that I'm facing at this moment is that some of the reviews have <code>More</code> button which is meant to click in order to show the full review.</p>
+
+<p>One of such is this:</p>
+
+<p><a href=""https://i.stack.imgur.com/0B8tY.jpg"" rel=""nofollow noreferrer""><img src=""https://i.stack.imgur.com/0B8tY.jpg"" alt=""enter image description here""></a></p>
+
+<p><a href=""https://www.google.com/maps/place/Pizzeria+Di+Matteo/@40.8512552,14.255779,17z/data=!4m7!3m6!1s0x133b0841ef6e38e5:0xece6ea09987e9baf!8m2!3d40.8512512!4d14.2579677!9m1!1b1"" rel=""nofollow noreferrer"">website address</a></p>
+
+<p>I've tried with:</p>
+
+<pre><code>from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+
+link = ""https://www.google.com/maps/place/Pizzeria+Di+Matteo/@40.8512552,14.255779,17z/data=!4m7!3m6!1s0x133b0841ef6e38e5:0xece6ea09987e9baf!8m2!3d40.8512512!4d14.2579677!9m1!1b1""
+
+driver = webdriver.Chrome()
+driver.get(link)
+wait = WebDriverWait(driver,10)
+
+while True:
+    try:
+        elem = wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, ""[class='section-loading-spinner']"")))
+        driver.execute_script(""arguments[0].scrollIntoView();"",elem)
+    except Exception:
+        break
+
+    for see_more in wait.until(EC.presence_of_all_elements_located((By.CSS_SELECTOR, ""button[class^='section-expand-review']""))):
+        see_more.click()
+
+
+for item in wait.until(EC.visibility_of_all_elements_located((By.CSS_SELECTOR, "".section-review-content""))):
+    name = item.find_element_by_css_selector(""[class='section-review-title'] &gt; span"").text
+    try:
+        review = item.find_element_by_css_selector(""[class='section-review-text']"").text
+    except AttributeError:
+        review = """"
+    print(name)
+
+driver.quit()
+</code></pre>
+
+<p>Currently the above script throws <code>stale element</code> error when it hits this line <code>for see_more in wait.until().click()</code>.</p>
+
+<p><strong><em>How can I click on that <code>More</code> button cyclically to get all the full reviews?</em></strong></p>
+","python,python-3.x,selenium,selenium-webdriver,web-scraping",57271365,57272411,3
+47,NWPathMonitor not calling satisfied in Swift,"<p>I'm using <code>NWPathMonitor</code>to detect when internet connection is on and off. The method gets called when both states happens, however when the internet connection is on, the called status still is <code>.unsatisfied</code>instead of <code>.satisfied</code>. Here's the class that I'm using:</p>
+
+<pre><code>import Network
+
+protocol NetworkCheckDelegate {
+    func statusDidChange(status: NWPath.Status)
+}
+
+class NetworkCheck {
+
+    private var monitor = NWPathMonitor()
+
+    private static let _sharedInstance = NetworkCheck()
+
+    var networkCheckDelegate: NetworkCheckDelegate?
+
+    class func sharedInstance() -&gt; NetworkCheck {
+        return _sharedInstance
+    }
+
+    // Create only one instance of NetworkCheck
+    private init() {
+        monitor.pathUpdateHandler = { path in
+            DispatchQueue.main.async(execute: {
+                self.networkCheckDelegate?.statusDidChange(status: path.status)
+            })
+        }
+        monitor.start(queue: DispatchQueue.global(qos: .background))
+    }
+
+    func removeMonitoring() {
+        monitor.cancel()
+    }
+}
+</code></pre>
+
+<p>My question is: Why does is the internet connection is called as <code>.unsatisfied</code>in both cases</p>
+","ios,swift,networking,detection",57223756,0,1
+48,Laravel nova - Custom field set value based on another field and still editable,"<p>laravel 5.8
+Nova 2.0.0</p>
+
+<p>I have two field based on first field I want to set the value of second and it is upto the user to use the set value or may insert a new one and submit the form.</p>
+
+<p>I am adding custom field like</p>
+
+<pre><code>CustomField::make('Field 2', 'field_2')-&gt;dependsOn('field_1'),
+</code></pre>
+
+<p>Now in <code>CustomField</code> class <code>dependsOn()</code> method I can access, the dependsOn field name, that is <code>field_1</code>, also in Vue > FormField.vue I can access it as <code>{{ field.dependsOnField }}</code> in template and as <code>console.log(this.field.dependsOnField);</code> in JS part, but how I can get the value of <code>field_1</code> and also on change I can get new value, I am new to Vue JS, but I tried it like</p>
+
+<pre><code>export default {
+
+ mounted() {
+        this.registerDependencyWatchers(this.$root)
+    },
+
+    methods: {
+         registerDependencyWatchers(root) {
+            //console.log('working 0');
+            console.log(this.field.dependsOnField);
+            root.$children.forEach(component =&gt; {
+                if (this.componentIsDependency(component)) {
+                    // console.log('working 1');
+                    console.log(component.$attrs);
+
+                    component.$watch('value', async (value) =&gt; {
+                        console.log('working 2');
+                        // this.dependencyValues[component.field.attribute] = value;
+                        // this.supplier = value;
+
+                        // var attr = (await Nova.request().post(""/custom-field/nova-component/custom-field/supplier"", {
+                        //     dependKey: component.field.attribute,
+                        //     dependValue: value
+                        // })).data;
+
+                        // this.supplier = attr.supplier;
+
+                        this.registerDependencyWatchers(component)
+                    });
+                }
+            });
+
+        },
+
+        componentIsDependency(component) {
+            console.log(component);
+             console.log(component.$attrs);
+             console.log(component.field);
+                if(component.field === undefined) { 
+                    return false;
+                }
+
+                for (let dependency of this.field.dependsOnField) {
+                    console.log(dependency);
+                    if(component.field.attribute === dependency.field) {
+                        return true;
+                    }
+                }
+
+                return false;
+            },
+
+    }
+} `componentIsDependency` is always returning false as `component.field` is undefined and if I am returing true there `component.$watch('value', async (value) =&gt; {` is not running, I coded it by taking reference from [NovaDependencyConatiner][1] package.
+</code></pre>
+
+<p><code>Console.log(component)</code> is something like</p>
+
+<pre><code>VueComponent {_uid: 22, _isVue: true, $options: {…}, _renderProxy: Proxy, _self: VueComponent, …}$asyncComputed: (...)$attrs: (...)$children: [VueComponent]$createElement: ƒ (a, b, c, d)$el: div.dropdown.relative.ml-auto.h-9.flex.items-center.dropdown-right$listeners: (...)$options: {parent: Vue, _parentVnode: VNode, propsData: {…}, _parentListeners: {…}, _renderChildren: Array(2), …}$parent: Vue {_uid: 14, _isVue: true, $options: {…}, _renderProxy: Proxy, _self: Vue, …}$refs: {}$root: Vue {_uid: 14, _isVue: true, $options: {…}, _renderProxy: Proxy, _self: Vue, …}$scopedSlots: {default: ƒ, menu: ƒ, $stable: true, $key: undefined, $hasNormal: true}$slots: {menu: Array(1)}$store: Store {_committing: false, _actions: {…}, _actionSubscribers: Array(0), _mutations: {…}, _wrappedGetters: {…}, …}$vnode: VNode {tag: ""vue-component-75-dropdown"", data: {…}, children: undefined, text: undefined, elm: div.dropdown.relative.ml-auto.h-9.flex.items-center.dropdown-right, …}classWhitelist: (...)close: ƒ ()toggle: ƒ ()visible: (...)__: ƒ ()_c: ƒ (a, b, c, d)_computedWatchers: {$asyncComputed: Watcher}_data: {__ob__: Observer}_directInactive: false_events: {}_hasHookEvent: false_inactive: null_isBeingDestroyed: false_isDestroyed: false_isMounted: true_isVue: true_props: {}_renderProxy: Proxy {_uid: 22, _isVue: true, $options: {…}, _renderProxy: Proxy, _self: VueComponent, …}_routerRoot: Vue {_uid: 14, _isVue: true, $options: {…}, _renderProxy: Proxy, _self: Vue, …}_self: VueComponent {_uid: 22, _isVue: true, $options: {…}, _renderProxy: Proxy, _self: VueComponent, …}_staticTrees: null_uid: 22_vnode: VNode {tag: ""div"", data: {…}, children: Array(3), text: undefined, elm: div.dropdown.relative.ml-auto.h-9.flex.items-center.dropdown-right, …}_watcher: Watcher {vm: VueComponent, deep: false, user: false, lazy: false, sync: false, …}_watchers: (2) [Watcher, Watcher]$data: (...)$isServer: (...)$props: (...)$route: (...)$router: (...)$ssrContext: (...)get $asyncComputed: ƒ computedGetter()set $asyncComputed: ƒ ()get $attrs: ƒ reactiveGetter()set $attrs: ƒ reactiveSetter(newVal)get $listeners: ƒ reactiveGetter()set $listeners: ƒ reactiveSetter(newVal)get visible: ƒ proxyGetter()set visible: ƒ proxySetter(val)__proto__: Vue
+custom-field:504 {}
+custom-field:503 VueComponent {_uid: 25, _isVue: true, $options: {…}, _renderProxy: Proxy, _self: VueComponent, …}$asyncComputed: (...)$attrs: (...)$children: Array(0)length: 0__proto__: Array(0)$createElement: ƒ (a, b, c, d)$el: div.progress$listeners: (...)$options: {parent: Vue, _parentVnode: VNode, propsData: undefined, _parentListeners: {…}, _renderChildren: undefined, …}$parent: Vue {_uid: 14, _isVue: true, $options: {…}, _renderProxy: Proxy, _self: Vue, …}$refs: {}$root: Vue {_uid: 14, _isVue: true, $options: {…}, _renderProxy: Proxy, _self: Vue, …}$scopedSlots: {$stable: true, $key: undefined, $hasNormal: false}$slots: {}$store: Store {_committing: false, _actions: {…}, _actionSubscribers: Array(0), _mutations: {…}, _wrappedGetters: {…}, …}$vnode: VNode {tag: ""vue-component-153-loading"", data: {…}, children: undefined, text: undefined, elm: div.progress, …}canSuccess: (...)color: (...)decrease: ƒ ()duration: (...)fail: ƒ ()failedColor: (...)finish: ƒ ()get: ƒ ()height: (...)hide: ƒ ()increase: ƒ ()pause: ƒ ()percent: (...)set: ƒ ()show: (...)start: ƒ ()__: ƒ ()_c: ƒ (a, b, c, d)_computedWatchers: {$asyncComputed: Watcher}_cut: 3.3333333333333335_data: {…}_directInactive: false_events: {}_hasHookEvent: false_inactive: null_isBeingDestroyed: false_isDestroyed: false_isMounted: true_isVue: true_renderProxy: Proxy {_uid: 25, _isVue: true, $options: {…}, _renderProxy: Proxy, _self: VueComponent, …}_routerRoot: Vue {_uid: 14, _isVue: true, $options: {…}, _renderProxy: Proxy, _self: Vue, …}_self: VueComponent {_uid: 25, _isVue: true, $options: {…}, _renderProxy: Proxy, _self: VueComponent, …}_staticTrees: null_timer: null_uid: 25_vnode: VNode {tag: ""div"", data: {…}, children: undefined, text: undefined, elm: div.progress, …}_watcher: Watcheractive: truebefore: ƒ before()arguments: (...)caller: (...)length: 0name: ""before""prototype: {constructor: ƒ}__proto__: ƒ ()[[FunctionLocation]]: vendor.js:98155[[Scopes]]: Scopes[4]cb: ƒ noop(a, b, c)arguments: (...)caller: (...)length: 3name: ""noop""prototype: {constructor: ƒ}__proto__: ƒ ()[[FunctionLocation]]: vendor.js:94355[[Scopes]]: Scopes[3]deep: falsedepIds: Set(5) {267, 271, 268, 269, 272}deps: (5) [Dep, Dep, Dep, Dep, Dep]0: Dep {id: 267, subs: Array(1)}1: Dep {id: 271, subs: Array(1)}2: Dep {id: 268, subs: Array(1)}3: Dep {id: 269, subs: Array(1)}4: Dep {id: 272, subs: Array(1)}length: 5__proto__: Array(0)dirty: falseexpression: ""function () {
+↵      vm._update(vm._render(), hydrating);
+↵    }""getter: ƒ ()arguments: (...)caller: (...)length: 0name: ""updateComponent""prototype: {constructor: ƒ}__proto__: ƒ ()[[FunctionLocation]]: vendor.js:98146[[Scopes]]: Scopes[4]id: 650lazy: falsenewDepIds: Set(0) {}size: (...)__proto__: Set[[Entries]]: Array(0)length: 0newDeps: []sync: falseuser: falsevalue: undefinedvm: VueComponent {_uid: 25, _isVue: true, $options: {…}, _renderProxy: Proxy, _self: VueComponent, …}__proto__: Object_watchers: (2) [Watcher, Watcher]$data: (...)$isServer: (...)$props: (...)$route: (...)$router: (...)$ssrContext: (...)get $asyncComputed: ƒ computedGetter()set $asyncComputed: ƒ ()get $attrs: ƒ reactiveGetter()set $attrs: ƒ reactiveSetter(newVal)get $listeners: ƒ reactiveGetter()set $listeners: ƒ reactiveSetter(newVal)get canSuccess: ƒ proxyGetter()set canSuccess: ƒ proxySetter(val)get color: ƒ proxyGetter()set color: ƒ proxySetter(val)get duration: ƒ proxyGetter()set duration: ƒ proxySetter(val)get failedColor: ƒ proxyGetter()set failedColor: ƒ proxySetter(val)get height: ƒ proxyGetter()set height: ƒ proxySetter(val)get percent: ƒ proxyGetter()set percent: ƒ proxySetter(val)get show: ƒ proxyGetter()set show: ƒ proxySetter(val)__proto__: Vue
+custom-field:504 {}
+custom-field:503 VueComponent {_uid: 27, _isVue: true, $options: {…}, _renderProxy: Proxy, _self: VueComponent, …}
+custom-field:504 {}
+custom-field:503 VueComponent {_uid: 28, _isVue: true, $options: {…}, _renderProxy: Proxy, _self: VueComponent, …}
+custom-field:504 {}
+</code></pre>
+","laravel,vue.js,laravel-nova",57053896,0,1
+49,Use Confluent Hub without Confluent Platform installation,"<p>I am using these installation instructions for getting confluent hub client <a href=""https://docs.confluent.io/current/connect/managing/confluent-hub/client.html"" rel=""noreferrer"">https://docs.confluent.io/current/connect/managing/confluent-hub/client.html</a></p>
+
+<p>But, when I get to the line to install the kafka-connect-elasticsearch connector</p>
+
+<p><code>confluent-hub install confluentinc/kafka-connect-elasticsearch:latest</code></p>
+
+<p>I continue to get this error message:</p>
+
+<pre><code>Unable to detect Confluent Platform installation. Specify --component-dir and --worker-configs explicitly.
+
+Error: Invalid options or arguments
+</code></pre>
+
+<p>I have ElasticSearch and Kafka all installed via Homebrew on my Mac</p>
+","apache-kafka,apache-kafka-connect,confluent-platform",56958382,0,3
+50,Exception on Spring Boot startup,"<p>I have a Spring Boot endpoint which takes inputs from user in Http request body of a POST request and persists it into a  MySql database.</p>
+
+<p>Build is successful but when i try to run the application using the command : 
+<code>mvn spring-boot:run</code></p>
+
+<p>It throws an exception and the application doesn't starts.</p>
+
+<p>I am new on spring boot and didn't find about this exception so not many things I have tried to solve this issue. Still waiting for a lead or direction.</p>
+
+<p>Here is the log file on server startup  : 
+Have removed few of irrelevant logs to stay within character limits : </p>
+
+<blockquote>
+  <p>2019-07-23 16:24:23.121 ERROR 8808 --- [           main] o.s.boot.SpringApplication               : Application run failed</p>
+  
+  <p>java.lang.IllegalStateException: Error processing condition on org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration$WebMvcAutoConfigurationAdapter.defaultViewResolver
+              at org.springframework.boot.autoconfigure.condition.SpringBootCondition.matches(SpringBootCondition.java:59) ~[spring-boot-autoconfigure-2.1.6.RELEASE.jar:2.1.6.RELEASE]
+              at org.springframework.context.annotation.ConditionEvaluator.shouldSkip(ConditionEvaluator.java:108) ~[spring-context-5.1.8.RELEASE.jar:5.1.8.RELEASE]
+              at org.springframework.context.annotation.ConfigurationClassBeanDefinitionReader.loadBeanDefinitionsForBeanMethod(ConfigurationClassBeanDefinitionReader.java:181) ~[spring-context-5.1.8.RELEASE.jar:5.1.8.RELEASE]
+              at org.springframework.context.annotation.ConfigurationClassBeanDefinitionReader.loadBeanDefinitionsForConfigurationClass(ConfigurationClassBeanDefinitionReader.java:141) ~[spring-context-5.1.8.RELEASE.jar:5.1.8.RELEASE]
+              at org.springframework.context.annotation.ConfigurationClassBeanDefinitionReader.loadBeanDefinitions(ConfigurationClassBeanDefinitionReader.java:117) ~[spring-context-5.1.8.RELEASE.jar:5.1.8.RELEASE]
+              at org.springframework.context.annotation.ConfigurationClassPostProcessor.processConfigBeanDefinitions(ConfigurationClassPostProcessor.java:327) ~[spring-context-5.1.8.RELEASE.jar:5.1.8.RELEASE]
+              at org.springframework.context.annotation.ConfigurationClassPostProcessor.postProcessBeanDefinitionRegistry(ConfigurationClassPostProcessor.java:232) ~[spring-context-5.1.8.RELEASE.jar:5.1.8.RELEASE]
+              at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanDefinitionRegistryPostProcessors(PostProcessorRegistrationDelegate.java:275) ~[spring-context-5.1.8.RELEASE.jar:5.1.8.RELEASE]
+              at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanFactoryPostProcessors(PostProcessorRegistrationDelegate.java:95) ~[spring-context-5.1.8.RELEASE.jar:5.1.8.RELEASE]
+              at org.springframework.context.support.AbstractApplicationContext.invokeBeanFactoryPostProcessors(AbstractApplicationContext.java:705) ~[spring-context-5.1.8.RELEASE.jar:5.1.8.RELEASE]
+              at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:531) ~[spring-context-5.1.8.RELEASE.jar:5.1.8.RELEASE]org.springframework.beans.factory.support.AbstractBeanFactory.isFactoryBean(AbstractBeanFactory.java:1518) ~[spring-beans-
+              at org.springframework.boot.autoconfigure.condition.OnBeanCondition.getBeanNamesForType(OnBeanCondition.java:261) ~[spring-boot-autoconfigure-2.1.6.RELEASE.jar:2.1.6.RELEASE]
+              at org.springframework.boot.autoconfigure.condition.OnBeanCondition.getBeanNamesForType(OnBeanCondition.java:250) ~[spring-boot-autoconfigure-2.1.6.RELEASE.jar:2.1.6.RELEASE]
+              at org.springframework.boot.autoconfigure.condition.OnBeanCondition.getMatchingBeans(OnBeanCondition.java:170) ~[spring-boot-autoconfigure-2.1.6.RELEASE.jar:2.1.6.RELEASE]
+              at org.springframework.boot.autoconfigure.condition.OnBeanCondition.getMatchOutcome(OnBeanCondition.java:145) ~[spring-boot-autoconfigure-2.1.6.RELEASE.jar:2.1.6.RELEASE]
+              at org.springframework.boot.autoconfigure.condition.SpringBootCondition.matches(SpringBootCondition.java:46) ~[spring-boot-autoconfigure-2.1.6.RELEASE.jar:2.1.6.RELEASE]
+              ... 23 common frames omitted
+      Caused by: java.lang.NoClassDefFoundError: org/springframework/web/cors/CorsConfigurationSource
+              at java.lang.ClassLoader.defineClass1(Native Method) ~[na:1.8.0_161]
+              at java.lang.ClassLoader.defineClass(ClassLoader.java:763) ~[na:1.8.0_161]
+              at java.security.SecureClassLoader.defineClass(SecureClassLoader.java:142) ~[na:1.8.0_161]
+              at java.net.URLClassLoader.defineClass(URLClassLoader.java:467) ~[na:1.8.0_161]
+              at java.net.URLClassLoader.access$100(URLClassLoader.java:73) ~[na:1.8.0_161]
+              at java.net.URLClassLoader$1.run(URLClassLoader.java:368) ~[na:1.8.0_161]
+              at java.net.URLClassLoader$1.run(URLClassLoader.java:362) ~[na:1.8.0_161]
+              at java.security.AccessController.doPrivileged(Native Method) ~[na:1.8.0_161]
+              at java.net.URLClassLoader.findClass(URLClassLoader.java:361) ~[na:1.8.0_161]
+              at java.lang.ClassLoader.loadClass(ClassLoader.java:424) ~[na:1.8.0_161]
+              at java.lang.ClassLoader.loadClass(ClassLoader.java:357) ~[na:1.8.0_161]
+              at java.lang.Class.getDeclaredMethods0(Native Method) ~[na:1.8.0_161]
+              at java.lang.Class.privateGetDeclaredMethods(Class.java:2701) ~[na:1.8.0_161]
+              at java.lang.Class.getDeclaredMethods(Class.java:1975) ~[na:1.8.0_161]
+              at org.springframework.util.ReflectionUtils.getDeclaredMethods(ReflectionUtils.java:489) ~[spring-core-5.1.8.RELEASE.jar:5.1.8.RELEASE]
+              ... 45 common frames omitted
+      Caused by: java.lang.ClassNotFoundException: org.springframework.web.cors.CorsConfigurationSource
+              at java.net.URLClassLoader.findClass(URLClassLoader.java:381) ~[na:1.8.0_161]
+              at java.lang.ClassLoader.loadClass(ClassLoader.java:424) ~[na:1.8.0_161]
+              at java.lang.ClassLoader.loadClass(ClassLoader.java:357) ~[na:1.8.0_161]
+              ... 60 common frames omitted
+      2019-07-23 16:24:23.261  WARN 8808 --- [           main] o.s.boot.SpringApplication               : Unable to close ApplicationContext
+      java.lang.IllegalStateException: Failed to introspect Class [org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration$WebMvcAutoConfigurationAdapter$FaviconConfiguration] from ClassLoader [java.net.URLClassLoader@1e48e3c]
+              at org.springframework.util.ReflectionUtils.getDeclaredMethods(ReflectionUtils.java:507) ~[spring-core-5.1.8.RELEASE.jar:5.1.8.RELEASE]
+              at org.springframework.util.ReflectionUtils.doWithMethods(ReflectionUtils.java:404) ~[spring-core-5.1.8.RELEASE.jar:5.1.8.RELEASE]
+              at org.springframework.util.ReflectionUtils.doWithMethods(ReflectionUtils.java:389) ~[spring-core-5.1.8.RELEASE.jar:5.1.8.RELEASE]
+              at org.springframework.util.ReflectionUtils.getUniqueDeclaredMethods(ReflectionUtils.java:447) ~[spring-core-5.1.8.RELEASE.jar:5.1.8.RELEASE]
+              at java.util.concurrent.ConcurrentHashMap.computeIfAbsent(ConcurrentHashMap.java:1688) ~[na:1.8.0_161]
+              at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.getTypeForFactoryMethod(AbstractAutowireCapableBeanFactory.java:738) ~[spring-beans-5.1.8.RELEASE.jar:5.1.8.RELEASE]
+              at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.determineTargetType(AbstractAutowireCapableBeanFactory.java:679) ~[spring-beans-5.1.8.RELEASE.jar:5.1.8.RELEASE]
+              at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.predictBeanType(AbstractAutowireCapableBeanFactory.java:647) ~[spring-beans-5.1.8.RELEASE.jar:5.1.8.RELEASE]
+              at org.springframework.beans.factory.support.AbstractBeanFactory.isFactoryBean(AbstractBeanFactory.java:1518) ~[spring-beans-5.1.8.RELEASE.jar:5.1.8.RELEASE]
+              at org.springframework.beans.factory.support.DefaultListableBeanFactory.doGetBeanNamesForType(DefaultListableBeanFactory.java:511) ~[spring-beans-5.1.8.RELEASE.jar:5.1.8.RELEASE]
+              at org.springframework.beans.factory.support.DefaultListableBeanFactory.getBeanNamesForType(DefaultListableBeanFactory.java:481) ~[spring-beans-5.1.8.RELEASE.jar:5.1.8.RELEASE]
+              at org.springframework.beans.factory.support.DefaultListableBeanFactory.getBeansOfType(DefaultListableBeanFactory.java:602) ~[spring-beans-5.1.8.RELEASE.jar:5.1.8.RELEASE]
+              at org.springframework.beans.factory.support.DefaultListableBeanFactory.getBeansOfType(DefaultListableBeanFactory.java:594) ~[spring-beans-5.1.8.RELEASE.jar:5.1.8.RELEASE]
+              at org.springframework.context.support.AbstractApplicationContext.getBeansOfType(AbstractApplicationContext.java:1226) ~[spring-context-5.1.8.RELEASE.jar:5.1.8.RELEASE]
+              at org.springframework.boot.SpringApplication.getExitCodeFromMappedException(SpringApplication.java:864) [spring-boot-2.1.6.RELEASE.jar:2.1.6.RELEASE]
+              at org.springframework.boot.SpringApplication.getExitCodeFromException(SpringApplication.java:852) [spring-boot-2.1.6.RELEASE.jar:2.1.6.RELEASE]
+              at org.springframework.boot.SpringApplication.handleExitCode(SpringApplication.java:839) [spring-boot-2.1.6.RELEASE.jar:2.1.6.RELEASE]
+              at org.springframework.boot.SpringApplication.handleRunFailure(SpringApplication.java:790) [spring-boot-2.1.6.RELEASE.jar:2.1.6.RELEASE]
+              at org.springframework.boot.SpringApplication.run(SpringApplication.java:321) [spring-boot-2.1.6.RELEASE.jar:2.1.6.RELEASE]
+              at org.springframework.boot.SpringApplication.run(SpringApplication.java:1213) [spring-boot-2.1.6.RELEASE.jar:2.1.6.RELEASE]
+              at org.springframework.boot.SpringApplication.run(SpringApplication.java:1202) [spring-boot-2.1.6.RELEASE.jar:2.1.6.RELEASE]
+              at com.volantis.LoginApplication.main(LoginApplication.java:15) [classes/:na]
+              at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:1.8.0_161]
+              at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[na:1.8.0_161]
+              at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:1.8.0_161]
+              at java.lang.reflect.Method.invoke(Method.java:498) ~[na:1.8.0_161]
+              at org.springframework.boot.maven.AbstractRunMojo$LaunchRunner.run(AbstractRunMojo.java:542) [spring-boot-maven-plugin-2.1.6.RELEASE.jar:2.1.6.RELEASE]
+              at java.lang.Thread.run(Thread.java:748) [na:1.8.0_161]
+      Caused by: java.lang.NoClassDefFoundError: org/springframework/web/cors/CorsConfigurationSource
+              at java.lang.ClassLoader.defineClass1(Native Method) ~[na:1.8.0_161]
+              at java.lang.ClassLoader.defineClass(ClassLoader.java:763) ~[na:1.8.0_161]
+              at java.security.SecureClassLoader.defineClass(SecureClassLoader.java:142) ~[na:1.8.0_161]
+              at java.net.URLClassLoader.defineClass(URLClassLoader.java:467) ~[na:1.8.0_161]
+              at java.net.URLClassLoader.access$100(URLClassLoader.java:73) ~[na:1.8.0_161]
+              at java.net.URLClassLoader$1.run(URLClassLoader.java:368) ~[na:1.8.0_161]
+              at java.net.URLClassLoader$1.run(URLClassLoader.java:362) ~[na:1.8.0_161]
+              at java.security.AccessController.doPrivileged(Native Method) ~[na:1.8.0_161]
+              at java.net.URLClassLoader.findClass(URLClassLoader.java:361) ~[na:1.8.0_161]
+              at java.lang.ClassLoader.loadClass(ClassLoader.java:424) ~[na:1.8.0_161]
+              at java.lang.ClassLoader.loadClass(ClassLoader.java:357) ~[na:1.8.0_161]
+              at java.lang.Class.getDeclaredMethods0(Native Method) ~[na:1.8.0_161]
+              at java.lang.Class.privateGetDeclaredMethods(Class.java:2701) ~[na:1.8.0_161]
+              at java.lang.Class.getDeclaredMethods(Class.java:1975) ~[na:1.8.0_161]
+              at org.springframework.util.ReflectionUtils.getDeclaredMethods(ReflectionUtils.java:489) ~[spring-core-5.1.8.RELEASE.jar:5.1.8.RELEASE]
+              ... 27 common frames omitted
+      Caused by: java.lang.ClassNotFoundException: org.springframework.web.cors.CorsConfigurationSource
+              at java.net.URLClassLoader.findClass(URLClassLoader.java:381) ~[na:1.8.0_161]
+              at java.lang.ClassLoader.loadClass(ClassLoader.java:424) ~[na:1.8.0_161]
+              at java.lang.ClassLoader.loadClass(ClassLoader.java:357) ~[na:1.8.0_161]
+              ... 42 common frames omitted
+      [WARNING]
+      java.lang.reflect.InvocationTargetException
+          at sun.reflect.NativeMethodAccessorImpl.invoke0 (Native Method)
+          at sun.reflect.NativeMethodAccessorImpl.invoke (NativeMethodAccessorImpl.java:62)
+          at sun.reflect.DelegatingMethodAccessorImpl.invoke (DelegatingMethodAccessorImpl.java:43)
+          at java.lang.reflect.Method.invoke (Method.java:498)
+          at org.springframework.boot.maven.AbstractRunMojo$LaunchRunner.run (AbstractRunMojo.java:542)
+          at java.lang.Thread.run (Thread.java:748)
+      Caused by: java.lang.IllegalStateException: Error processing condition on org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration$WebMvcAutoConfigurationAdapter.defaultViewResolver
+          at org.springframework.boot.autoconfigure.condition.SpringBootCondition.matches (SpringBootCondition.java:59)
+          at org.springframework.context.annotation.ConditionEvaluator.shouldSkip (ConditionEvaluator.java:108)
+          at org.springframework.context.annotation.ConfigurationClassBeanDefinitionReader.loadBeanDefinitionsForBeanMethod (ConfigurationClassBeanDefinitionReader.java:181)
+          at org.springframework.context.annotation.ConfigurationClassBeanDefinitionReader.loadBeanDefinitionsForConfigurationClass (ConfigurationClassBeanDefinitionReader.java:141)
+          at org.springframework.context.annotation.ConfigurationClassBeanDefinitionReader.loadBeanDefinitions (ConfigurationClassBeanDefinitionReader.java:117)
+          at org.springframework.context.annotation.ConfigurationClassPostProcessor.processConfigBeanDefinitions (ConfigurationClassPostProcessor.java:327)
+          at org.springframework.context.annotation.ConfigurationClassPostProcessor.postProcessBeanDefinitionRegistry (ConfigurationClassPostProcessor.java:232)
+          at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanDefinitionRegistryPostProcessors (PostProcessorRegistrationDelegate.java:275)
+          at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanFactoryPostProcessors (PostProcessorRegistrationDelegate.java:95)
+          at org.springframework.context.support.AbstractApplicationContext.invokeBeanFactoryPostProcessors (AbstractApplicationContext.java:705)
+          at org.springframework.context.support.AbstractApplicationContext.refresh (AbstractApplicationContext.java:531)
+          at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh (ServletWebServerApplicationContext.java:140)
+          at org.springframework.boot.SpringApplication.refresh (SpringApplication.java:742)
+          at org.springframework.boot.SpringApplication.refreshContext (SpringApplication.java:389)
+          at org.springframework.boot.SpringApplication.run (SpringApplication.java:311)
+          at org.springframework.boot.SpringApplication.run (SpringApplication.java:1213)
+          at org.springframework.boot.SpringApplication.run (SpringApplication.java:1202)
+          at com.volantis.LoginApplication.main (LoginApplication.java:15)
+          at sun.reflect.NativeMethodAccessorImpl.invoke0 (Native Method)
+          at sun.reflect.NativeMethodAccessorImpl.invoke (NativeMethodAccessorImpl.java:62)
+          at sun.reflect.DelegatingMethodAccessorImpl.invoke (DelegatingMethodAccessorImpl.java:43)
+          at java.lang.reflect.Method.invoke (Method.java:498)
+          at org.springframework.boot.maven.AbstractRunMojo$LaunchRunner.run (AbstractRunMojo.java:542)
+          at java.lang.Thread.run (Thread.java:748)
+      Caused by: java.lang.IllegalStateException: Failed to introspect Class [org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration$WebMvcAutoConfigurationAdapter$FaviconConfiguration] from ClassLoader [java.net.URLClassLoader@1e48e3c]
+          at org.springframework.util.ReflectionUtils.getDeclaredMethods (ReflectionUtils.java:507)
+          at org.springframework.util.ReflectionUtils.doWithMethods (ReflectionUtils.java:404)
+          at org.springframework.util.ReflectionUtils.doWithMethods (ReflectionUtils.java:389)
+          at org.springframework.util.ReflectionUtils.getUniqueDeclaredMethods (ReflectionUtils.java:447)
+          at java.util.concurrent.ConcurrentHashMap.computeIfAbsent (ConcurrentHashMap.java:1688)
+          at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.getTypeForFactoryMethod (AbstractAutowireCapableBeanFactory.java:738)
+          at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.determineTargetType (AbstractAutowireCapableBeanFactory.java:679)
+          at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.predictBeanType (AbstractAutowireCapableBeanFactory.java:647)
+          at org.springframework.beans.factory.support.AbstractBeanFactory.isFactoryBean (AbstractBeanFactory.java:1518)
+          at org.springframework.beans.factory.support.AbstractBeanFactory.isFactoryBean (AbstractBeanFactory.java:1023)
+          at org.springframework.boot.autoconfigure.condition.BeanTypeRegistry.addBeanTypeForNonAliasDefinition (BeanTypeRegistry.java:190)
+          at org.springframework.boot.autoconfigure.condition.BeanTypeRegistry.addBeanTypeForNonAliasDefinition (BeanTypeRegistry.java:157)
+          at org.springframework.boot.autoconfigure.condition.BeanTypeRegistry.addBeanType (BeanTypeRegistry.java:150)
+          at org.springframework.boot.autoconfigure.condition.BeanTypeRegistry.updateTypesIfNecessary (BeanTypeRegistry.java:138)
+          at java.util.Iterator.forEachRemaining (Iterator.java:116)
+          at org.springframework.boot.autoconfigure.condition.BeanTypeRegistry.updateTypesIfNecessary (BeanTypeRegistry.java:133)
+          at org.springframework.boot.autoconfigure.condition.BeanTypeRegistry.getNamesForType (BeanTypeRegistry.java:97)
+          at org.springframework.boot.autoconfigure.condition.OnBeanCondition.collectBeanNamesForType (OnBeanCondition.java:268)
+          at org.springframework.boot.autoconfigure.condition.OnBeanCondition.getBeanNamesForType (OnBeanCondition.java:261)
+          at org.springframework.boot.autoconfigure.condition.OnBeanCondition.getBeanNamesForType (OnBeanCondition.java:250)
+          at org.springframework.boot.autoconfigure.condition.OnBeanCondition.getMatchingBeans (OnBeanCondition.java:170)
+          at org.springframework.boot.autoconfigure.condition.OnBeanCondition.getMatchOutcome (OnBeanCondition.java:145)
+          at org.springframework.boot.autoconfigure.condition.SpringBootCondition.matches (SpringBootCondition.java:46)
+          at org.springframework.context.annotation.ConditionEvaluator.shouldSkip (ConditionEvaluator.java:108)
+          at org.springframework.context.annotation.ConfigurationClassBeanDefinitionReader.loadBeanDefinitionsForBeanMethod (ConfigurationClassBeanDefinitionReader.java:181)
+          at org.springframework.context.annotation.ConfigurationClassBeanDefinitionReader.loadBeanDefinitionsForConfigurationClass (ConfigurationClassBeanDefinitionReader.java:141)
+          at org.springframework.context.annotation.ConfigurationClassBeanDefinitionReader.loadBeanDefinitions (ConfigurationClassBeanDefinitionReader.java:117)
+          at org.springframework.context.annotation.ConfigurationClassPostProcessor.processConfigBeanDefinitions (ConfigurationClassPostProcessor.java:327)
+          at org.springframework.context.annotation.ConfigurationClassPostProcessor.postProcessBeanDefinitionRegistry (ConfigurationClassPostProcessor.java:232)
+          at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanDefinitionRegistryPostProcessors (PostProcessorRegistrationDelegate.java:275)
+          at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanFactoryPostProcessors (PostProcessorRegistrationDelegate.java:95)
+          at org.springframework.context.support.AbstractApplicationContext.invokeBeanFactoryPostProcessors (AbstractApplicationContext.java:705)
+          at org.springframework.context.support.AbstractApplicationContext.refresh (AbstractApplicationContext.java:531)
+          at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh (ServletWebServerApplicationContext.java:140)
+          at org.springframework.boot.SpringApplication.refresh (SpringApplication.java:742)
+          at org.springframework.boot.SpringApplication.refreshContext (SpringApplication.java:389)
+          at org.springframework.boot.SpringApplication.run (SpringApplication.java:311)
+          at org.springframework.boot.SpringApplication.run (SpringApplication.java:1213)
+          at org.springframework.boot.SpringApplication.run (SpringApplication.java:1202)
+          at com.volantis.LoginApplication.main (LoginApplication.java:15)
+          at sun.reflect.NativeMethodAccessorImpl.invoke0 (Native Method)
+          at sun.reflect.NativeMethodAccessorImpl.invoke (NativeMethodAccessorImpl.java:62)
+          at sun.reflect.DelegatingMethodAccessorImpl.invoke (DelegatingMethodAccessorImpl.java:43)
+          at java.lang.reflect.Method.invoke (Method.java:498)
+          at org.springframework.boot.maven.AbstractRunMojo$LaunchRunner.run (AbstractRunMojo.java:542)
+          at java.lang.Thread.run (Thread.java:748)
+      Caused by: java.lang.NoClassDefFoundError: org/springframework/web/cors/CorsConfigurationSource
+          at java.lang.ClassLoader.defineClass1 (Native Method)
+          at java.lang.ClassLoader.defineClass (ClassLoader.java:763)
+          at java.security.SecureClassLoader.defineClass org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.getTypeForFactoryMethod (AbstractAutowireCapableBeanFactory.java:738)
+          at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.determineTargetType (AbstractAutowireCapableBeanFactory.java:679)
+          at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.predictBeanType (AbstractAutowireCapableBeanFactory.java:647)
+          at org.springframework.beans.factory.support.AbstractBeanFactory.isFactoryBean (AbstractBeanFactory.java:1518)
+          at org.springframework.beans.factory.support.AbstractBeanFactory.isFactoryBean (AbstractBeanFactory.java:1023)
+          at org.springframework.boot.autoconfigure.condition.BeanTypeRegistry.addBeanTypeForNonAliasDefinition (BeanTypeRegistry.java:190)
+          at org.springframework.beans.factory.support.AbstractBeanFactory.isFactoryBean (AbstractBeanFactory.java:1023)
+          at org.springframework.boot.autoconfigure.condition.BeanTypeRegistry.addBeanTypeForNonAliasDefinition (BeanTypeRegistry.java:190)
+          at org.springframework.boot.autoconfigure.condition.BeanTypeRegistry.addBeanTypeForNonAliasDefinition (BeanTypeRegistry.java:157)
+          at org.springframework.boot.autoconfigure.condition.BeanTypeRegistry.addBeanType (BeanTypeRegistry.java:150)
+          at org.springframework.boot.autoconfigure.condition.BeanTypeRegistry.updateTypesIfNecessary (BeanTypeRegistry.java:138)
+          at java.util.Iterator.forEachRemaining (Iterator.java:116)
+          at org.springframework.boot.autoconfigure.condition.BeanTypeRegistry.updateTypesIfNecessary (BeanTypeRegistry.java:133)
+          at org.springframework.boot.autoconfigure.condition.BeanTypeRegistry.getNamesForType (BeanTypeRegistry.java:97)
+          at org.springframework.boot.autoconfigure.condition.OnBeanCondition.collectBeanNamesForType (OnBeanCondition.java:268)
+          at org.springframework.boot.autoconfigure.condition.OnBeanCondition.getBeanNamesForType (OnBeanCondition.java:261)
+          at org.springframework.boot.autoconfigure.condition.OnBeanCondition.getBeanNamesForType (OnBeanCondition.java:250)
+          at org.springframework.boot.autoconfigure.condition.OnBeanCondition.getMatchingBeans (OnBeanCondition.java:170)
+          at org.springframework.boot.autoconfigure.condition.OnBeanCondition.getMatchOutcome (OnBeanCondition.java:145)
+          at org.springframework.boot.autoconfigure.condition.SpringBootCondition.matches (SpringBootCondition.java:46)
+          at org.springframework.context.annotation.ConditionEvaluator.shouldSkip (ConditionEvaluator.java:108)
+          at org.springframework.context.annotation.ConfigurationClassBeanDefinitionReader.loadBeanDefinitionsForBeanMethod (ConfigurationClassBeanDefinitionReader.java:181)
+          at org.springframework.context.annotation.ConfigurationClassBeanDefinitionReader.loadBeanDefinitionsForConfigurationClass (ConfigurationClassBeanDefinitionReader.java:141)
+          at org.springframework.context.support.AbstractApplicationContext.refresh (AbstractApplicationContext.java:531)
+          at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh (ServletWebServerApplicationContext.java:140)
+          at org.springframework.boot.SpringApplication.refresh (SpringApplication.java:742)
+          at org.springframework.boot.SpringApplication.refreshContext (SpringApplication.java:389)
+          at org.springframework.boot.SpringApplication.run (SpringApplication.java:311)
+          at org.springframework.boot.SpringApplication.run (SpringApplication.java:1213)
+          at org.springframework.boot.SpringApplication.run (SpringApplication.java:1202)
+          at com.volantis.LoginApplication.main (LoginApplication.java:15)
+          at sun.reflect.NativeMethodAccessorImpl.invoke0 (Native Method)
+          at sun.reflect.NativeMethodAccessorImpl.invoke (NativeMethodAccessorImpl.java:62)
+          at sun.reflect.DelegatingMethodAccessorImpl.invoke (DelegatingMethodAccessorImpl.java:43)
+          at java.lang.reflect.Method.invoke (Method.java:498)
+          at org.springframework.boot.maven.AbstractRunMojo$LaunchRunner.run (AbstractRunMojo.java:542)
+          at java.lang.Thread.run (Thread.java:748)
+      [INFO] ------------------------------------------------------------------------
+      [INFO] BUILD FAILURE
+      [INFO] ------------------------------------------------------------------------
+      [INFO] Total time:  9.554 s
+      [INFO] Finished at: 2019-07-23T16:24:24+05:30
+      [INFO] ------------------------------------------------------------------------
+      [ERROR] Failed to execute goal org.springframework.boot:spring-boot-maven-plugin:2.1.6.RELEASE:run (default-cli) on project login: An exception occurred while running. null: InvocationTargetException: Error processing condition on org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration$WebMvcAutoConfigurationAdapter.defaultViewResolver: Failed to introspect Class [org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration$WebMvcAutoConfigurationAdapter$FaviconConfiguration] from ClassLoader [java.net.URLClassLoader@1e48e3c]: org/springframework/web/cors/CorsConfigurationSource: org.springframework.web.cors.CorsConfigurationSource -> [Help 1]
+      [ERROR]
+      [ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+      [ERROR] Re-run Maven using the -X switch to enable full debug logging.
+      [ERROR]
+      [ERROR] For more information about the errors and possible solutions, please read the following articles:</p>
+</blockquote>
+
+<p>Since the build is passing and the configuration looks fine the application should have started without any exceptions.</p>
+
+<p>Below is my pom.xml : </p>
+
+<pre><code>&lt;?xml version=""1.0"" encoding=""UTF-8""?&gt;
+&lt;project xmlns=""http://maven.apache.org/POM/4.0.0"" xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance""
+     xsi:schemaLocation=""http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd""&gt;
+
+&lt;parent&gt;
+    &lt;groupId&gt;com.volantis&lt;/groupId&gt;
+    &lt;artifactId&gt;todo&lt;/artifactId&gt;
+    &lt;version&gt;0.0.1-SNAPSHOT&lt;/version&gt;
+&lt;/parent&gt;
+
+&lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
+&lt;artifactId&gt;login&lt;/artifactId&gt;
+&lt;version&gt;0.0.1-SNAPSHOT&lt;/version&gt;
+&lt;name&gt;login&lt;/name&gt;
+&lt;description&gt;Module to cover user registration and login&lt;/description&gt;
+
+&lt;dependencies&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+        &lt;artifactId&gt;spring-boot-starter&lt;/artifactId&gt;
+        &lt;version&gt;2.1.6.RELEASE&lt;/version&gt;
+    &lt;/dependency&gt;
+
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+        &lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;
+        &lt;version&gt;2.1.6.RELEASE&lt;/version&gt;
+    &lt;/dependency&gt;
+
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.springframework&lt;/groupId&gt;
+        &lt;artifactId&gt;spring-web&lt;/artifactId&gt;
+        &lt;version&gt;4.1.6.RELEASE&lt;/version&gt;
+    &lt;/dependency&gt;
+
+    &lt;!-- JPA Data (We are going to use Repositories, Entities, Hibernate, etc...) --&gt;
+
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+        &lt;artifactId&gt;spring-boot-starter-data-jpa&lt;/artifactId&gt;
+    &lt;/dependency&gt;
+
+    &lt;!-- Use MySQL Connector-J --&gt;
+
+    &lt;dependency&gt;
+        &lt;groupId&gt;mysql&lt;/groupId&gt;
+        &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt;
+    &lt;/dependency&gt;
+&lt;/dependencies&gt;
+</code></pre>
+
+<p></p>
+","java,spring-boot",57162758,0,3
+51,How to fix &quot;Failed prop type: The property `spacing` of `grid` must be used on `container`?,"<p>I am currently working on a project in which I utilize React and the Material-UI framework. However, after using grid an error pops up saying:</p>
+
+<pre><code>checkPropTypes.js:20 Warning: Failed prop type: The property `spacing` of `Grid` must be used on `container`.
+    in WithStyles(ForwardRef(Grid)) (created by NavBar)
+    in NavBar (created by Root)
+    in Root
+</code></pre>
+
+<p>I have already checked all of my code and the Grid container does use the <code>spacing</code> prop.
+I have also tried removing spacing from Grid item and this causes more errors.</p>
+
+<pre><code>&lt;BrowserRouter&gt;
+      &lt;AppBar position=""static""&gt;
+        &lt;Toolbar style={navStyle}&gt;
+          &lt;Grid
+            justify=""space-between""
+            container
+            spacing={10}
+          &gt;
+            &lt;Grid
+              item
+              spacing={2}
+            &gt;
+...
+</code></pre>
+
+<p>Everything is showing up on the screen properly, however; this error still pops up. I am unsure how to fix this and would love to learn!</p>
+","reactjs,grid,material-ui,console.log",57031580,0,1
+52,Adding WKInterfaceTimer to SwiftUI,"<p>How to add WKInterfaceTimer to SwiftUI ? Anyone who already did it ?
+There is no init for WKInterfaceTimer how to do it ?</p>
+","swiftui,watchos",56943817,0,2
+53,Error in yaml code could not find expected &#39;:&#39;,"<p>yaml code</p>
+<pre class=""lang-yaml prettyprint-override""><code>- hosts: all
+
+  tasks:
+  #Import Remi GPG key - see: http://rpms.famillecollet.com/RPM-GPG-KEY-remi
+  wget http://rpms.famillecollet.com/RPM-GPG-KEY-remi \ -O /etc/pki/rpm-gpg/RPM-GPG-KEY-remi
+  rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-remi
+ #Install Remi repo
+  rpm -Uvh --quiet \
+    http://rpms.famillecollet.com/enterprise/remi-release-6.rpm
+</code></pre>
+<p>Install EPEL repo.</p>
+<pre><code>yum install epel-release
+</code></pre>
+<p>Install Node.js (npm plus all its dependencies).</p>
+<pre><code>yum --enablerepo=epel install node
+</code></pre>
+<p>I am getting following error when compiling: <code>ERROR! Syntax Error while loading YAML.</code></p>
+<blockquote>
+<p>The error appears to have been in '/home/shahzad/playbook.yml': line
+7, column 3, but may be elsewhere in the file depending on the exact
+syntax problem.</p>
+</blockquote>
+<p>The offending line appears to be:</p>
+<pre><code>  wget http://rpms.famillecollet.com/RPM-GPG-KEY-remi \ -O /etc/pki/rpm-gpg/RPM-GPG-KEY-remi
+  rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-remi
+  ^ here
+</code></pre>
+<pre><code>exception type: &lt;class 'yaml.scanner.ScannerError'&gt;
+exception: while scanning a simple key
+  in &quot;&lt;unicode string&gt;&quot;, line 6, column 3
+could not find expected ':'
+  in &quot;&lt;unicode string&gt;&quot;, line 7, column 3
+</code></pre>
+",ansible,57213484,0,3
+54,Downloading file from MS teams programatically,"<p>Previously, I developed an application which downloaded a file from a corporate Sharepoint site and then performed some magic with it.</p>
+
+<p>The powers that be have since migrated to MS Teams and I'm trying to update the application to use the new platform. However, I'm having all sorts of issues getting the file to download.</p>
+
+<p>My old (working for Sharepoint) code uses a <code>WebClient</code> to retrieve the file based on credentials previously provided by the user:</p>
+
+<pre><code>    private string GetSchedule(string username, string password, string domain)
+    {
+
+        string tempPath = Path.GetTempFileName().Replace("".tmp"", "".xlsm"");
+        using (WebClient client = new WebClient())
+        {
+            client.Credentials = new NetworkCredential(username, password, domain);
+            try
+            {
+                client.DownloadFile(_networkSchedulePath, tempPath);
+            }
+            catch (WebException e)
+            {
+                if (e.Message.Contains(""401""))
+                {
+                    StatusUpdated?.Invoke(this, new EventArgs&lt;string&gt;(""Invalid Credentials Provided""));
+                    Finished?.Invoke(this, null);
+                    return null;
+                }
+                if (e.Message.Contains(""404""))
+                {
+                    StatusUpdated?.Invoke(this, new EventArgs&lt;string&gt;(""File Not Found""));
+                    Finished?.Invoke(this, null);
+                    return null;
+                }
+                else
+                {
+                    StatusUpdated?.Invoke(this, new EventArgs&lt;string&gt;(e.Message));
+                    Finished?.Invoke(this, null);
+                    return null;
+                }
+            }
+        }
+        return tempPath;
+    }
+</code></pre>
+
+<p>However, when I use this with the new teams link I'm getting a <code>403 Forbidden</code> error. So is there any way to programmatically retrieve a file from MS Teams?</p>
+","c#,sharepoint,microsoft-teams",56833417,56974044,1
+55,How to convert Assets Images &amp; Icons to PdfImage in flutter using dart_pdf,"<p><a href=""https://github.com/DavBfr/dart_pdf"" rel=""noreferrer"">Used Library: dart_pdf</a> After searching I found the same issue in <a href=""https://github.com/DavBfr/dart_pdf/issues/15"" rel=""noreferrer"">GITHUB</a> but unable to resolve the issue. I tried this but blurry image appears. Please help!!</p>
+
+<pre><code>  ByteData data = await rootBundle.load('assets/test.jpg');
+  var codec = await instantiateImageCodec(data.buffer.asUint8List());
+  var frame = await codec.getNextFrame();
+
+  var imageBytes = await frame.image.toByteData();
+  PdfImage assetImage = PdfImage(pdf.document,
+      image: imageBytes.buffer.asUint8List(), width: 86, height: 80);
+</code></pre>
+
+<p><strong>Rendered Image:</strong></p>
+
+<p><a href=""https://i.stack.imgur.com/B5swk.jpg"" rel=""noreferrer""><img src=""https://i.stack.imgur.com/B5swk.jpg"" alt=""enter image description here""></a></p>
+","pdf,flutter,dart,pdf-generation,flutter-layout",56896905,56902076,3
+56,How to get the maximum and minimum values of a given type,"<p>How does one get the maximum and minimum values of a Number type like an Integer or a Float?</p>
+
+<pre><code>max_value(Int)
+</code></pre>
+",julia,57284696,0,1
+57,slow Inference time for Neural Net,"<p>I have written a simple Fully connected Neural Network in Pytorch. I saved the model and loaded it in C++ using LibTorch but my inference time is pretty slow for my application field. Inference time right now is about 10 ms. Is it normal or am I doing something wrong?</p>
+
+<p>I measured the inference time on python only first. then to maybe make it faster I loaded the network on C++ but it didn't help.</p>
+
+<p>Here is the code for network </p>
+
+<pre><code>class network(nn.Module):
+    def __init__(self):
+        super(network,self).__init__()
+        input_nodes = 362
+        hidden_nodes1 = 50
+        hidden_nodes2 = 30
+        output_nodes = 1
+
+    self.fc1 = nn.Linear(input_nodes,hidden_nodes1)
+    nn.init.xavier_uniform_(self.fc1.weight)
+    self.bn1 = nn.BatchNorm1d(num_features=hidden_nodes1)
+
+    self.fc2 = nn.Linear(hidden_nodes1,hidden_nodes2)
+    nn.init.xavier_uniform_(self.fc2.weight)
+    self.bn2 = nn.BatchNorm1d(num_features = hidden_nodes2)
+
+    self.fc3 = nn.Linear(hidden_nodes2,output_nodes)
+    nn.init.xavier_uniform_(self.fc3.weight)
+
+    self.out_act = nn.Sigmoid();
+
+def forward(self,X):
+    X = F.relu(self.bn1(self.fc1(X)))
+    X = self.fc2(X)
+    X = F.dropout2d(X,p=0.3)
+    X = F.relu(X)
+    X = self.fc3(X)
+    out = self.out_act(X)
+    return out
+</code></pre>
+
+<p>I want inference to somewhat take around 0.01 milliseconds.</p>
+","python,machine-learning,pytorch,libtorch",57012213,0,1
+58,Flutter Mobx There are no observables detected in the builder function,"<p>Hi I got simple obseverable for testing loading state.</p>
+
+<pre><code>abstract class _AccountStore with Store {
+  @observable
+  bool loadingButtonStatus = false;
+
+
+  @observable
+  bool get loading =&gt; loadingButtonStatus;
+
+
+  @action
+  Future updateAccount(formData) async {
+    loadingButtonStatus = true;
+
+    Future.delayed(Duration(milliseconds: 2000)).then((future) {
+      loadingButtonStatus = false;
+    }).catchError((e) {
+      loadingButtonStatus = false;
+      print(e);
+    });
+  }
+}
+</code></pre>
+
+<p>here is my widget</p>
+
+<pre><code>AccountStore store = AccountStore();
+
+Observer(
+  name: 'loading_button',
+  builder: (_) =&gt; LoadingButton(
+        loading: store.loading,
+        text: Text('Save'),
+        onPressed: () {
+          store.updateAccount({});
+        },
+))
+</code></pre>
+
+<p>But everytime i run the code it always return me: <code>There are no observables detected in the builder function</code></p>
+
+<p>I've tried changed use <code>store.loadingButtonStatus</code> still the same.</p>
+
+<p>any solution?</p>
+
+<p>thanks.</p>
+","flutter,mobx",57042000,0,1
+59,mat-select value dosen&#39;t work with formControlName,"<p>I am using mat-select ,I need to set default value for it. It works but After adding formControlName to it, its default value is not displayed.</p>
+
+<p>I tried [(ngModel)] and [(value)] , and ""mat-autocomplete""</p>
+
+<pre><code>&lt;mat-form-field&gt;
+ &lt;mat-select placeholder=""پیش نمایش"" 
+   formControlName=""lesson"" 
+     [value]=""free_demo""
+      (selectionChange)=""onSelectDemo(i)""&gt;
+      &lt;mat-option [value]=""demo.id""
+       *ngFor=""let demo of demos[i]""&gt;
+        {{ demo.title }}
+       &lt;/mat-option&gt;
+   &lt;/mat-select&gt;
+</code></pre>
+
+<p></p>
+","angular,angular-material",56882657,56883188,1
+60,how to create a conditional break point in ipdb,"<p>I am using python version 3.7.1 in spyder.</p>
+
+<p>When I run a script and I need to debug I simply enter the line below the line before where an error happens.</p>
+
+<blockquote>
+  <p>breakpoint()</p>
+</blockquote>
+
+<p>So far for my basic needs this has been sufficient. I can see the current values of the variables or type commands in the ipdb> command line section.</p>
+
+<p>However I can't work out how to use a conditional break point? I have tried reading various sites but don't quite understand what I need to do. They also tend to mention pdb not ipdb. How can I use a conditional break point?</p>
+","python,ipython,spyder",56908383,0,3
+61,Cannot add viewport Unreal C++,"<p>I'm trying to add a blueprint viewport through c++.
+I keep getting errors that there is no overloaded instance for function
+CreateWidget even though I've been following this
+<a href=""https://wiki.unrealengine.com/UMG,_Referencing_UMG_Widgets_in_Code"" rel=""nofollow noreferrer"">https://wiki.unrealengine.com/UMG,_Referencing_UMG_Widgets_in_Code</a></p>
+
+<p>// HUD.h</p>
+
+<pre><code>// Copyright 1998-2018 Epic Games, Inc. All Rights Reserved.
+
+#pragma once 
+
+#include ""CoreMinimal.h""
+#include ""GameFramework/HUD.h""
+#include ""ZombieHUD.generated.h""
+
+UCLASS()
+class AZombieHUD : public AHUD
+{
+    GENERATED_BODY()
+
+public:
+    AZombieHUD();
+
+    /** Primary draw call for the HUD */
+    virtual void DrawHUD() override;
+
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = ""Widgets"")
+    TSubclassOf&lt;class UUserWidget&gt; wCrossHairWidget;
+
+    UUserWidget* CrossHairWidget;
+
+private:
+    /** Crosshair asset pointer */
+    class UTexture2D* CrosshairTex;
+
+};
+
+
+</code></pre>
+
+<p>// HUD.cpp</p>
+
+<pre><code>// imports
+#include ""ZombieHUD.h""
+#include ""Engine/Canvas.h""
+#include ""Engine/Texture2D.h""
+#include ""TextureResource.h""
+#include ""Blueprint/UserWidget.h""
+#include ""CanvasItem.h""
+#include ""UObject/ConstructorHelpers.h""
+
+...
+
+void AZombieHUD::DrawHUD()
+{
+    Super::DrawHUD();
+    if (wCrossHairWidget) {
+
+        auto name = FName(TEXT(""CH""));
+        CrossHairWidget = CreateWidget&lt;UUserWidget&gt;(this, wCrossHairWidget, name);
+        if (CrossHairWidget)
+        {
+            CrossHairWidget&gt;AddToViewport();
+        }
+    }
+}
+</code></pre>
+
+<p>What am I doing wrong here?</p>
+","c++,unreal-engine4",57244459,0,3
+62,Why keras use &quot;call&quot; instead of __call__?,"<p>I fond the following code in (<a href=""https://www.tensorflow.org/tutorials/eager/custom_layers"" rel=""noreferrer"">https://www.tensorflow.org/tutorials/eager/custom_layers</a>)</p>
+
+<pre><code>class MyDenseLayer(tf.keras.layers.Layer):
+  def __init__(self, num_outputs):
+    super(MyDenseLayer, self).__init__()
+    self.num_outputs = num_outputs
+
+  def build(self, input_shape):
+    self.kernel = self.add_variable(""kernel"",
+                                shape=[int(input_shape[-1]),
+                                       self.num_outputs])
+
+  def call(self, input):
+    return tf.matmul(input, self.kernel)
+</code></pre>
+
+<p>The last two lines is call method, while it does not like usual python class method  <strong>call</strong> with two underlines. Is any differences between those? </p>
+","tensorflow,keras",57103604,59407927,3
+63,pip how to remove incorrectly installed package with a leading dash: &quot;-pkgname&quot;,"<p>typing <code>pip freeze</code> I noticed the following warning on top of the list:</p>
+
+<blockquote>
+  <p>WARNING: Could not parse requirement: -atplotlib</p>
+</blockquote>
+
+<p>So I checked the installed packages using: <code>pip list</code>
+And, indeed the following is considered a package:</p>
+
+<pre><code>    Package         Version
+    --------------- -------
+    -atplotlib      3.0.3
+</code></pre>
+
+<p>I assume I probably had a typo when installing/upgrading matplotlib, which led to the aformentioned ""package"" being installed.</p>
+
+<p>Unfortunately I am not able to remove it as typing</p>
+
+<pre><code>pip uninstall -atplotlib
+</code></pre>
+
+<p>is read as a command and returns the following error:<code>no such option: -a</code>.
+Any suggestion on how to proceed?</p>
+
+<h2>EDIT</h2>
+
+<p>I found the following folders:</p>
+
+<blockquote>
+  <p>C:\Users\name\Anaconda3\Lib\site-packages\~atplotlib</p>
+  
+  <p>C:\Users\name\Anaconda3\Lib\site-packages\~atplotlib-3.0.3-py3.7.egg-info</p>
+</blockquote>
+
+<p>Is it safe (and sufficient) to remove them?</p>
+","python,pip",56973015,56985082,3
+64,How to change swagger-ui.html default path,"<p>I wanna change my <strong>swagger-ui</strong> path from <code>localhost:8080/swagger-ui.html</code> to
+<code>localhost:8080/myapi/swagger-ui.html</code> in <code>springboot</code> 
+redirect is helpless to me</p>
+","spring-boot,swagger-ui,swagger-2.0",57193286,0,2
+65,GSM SIM800C text to speech audio stream,"<p>I have <a href=""https://www.banggood.com/USB-to-GSM-Serial-GPRS-SIM800C-Module-With-Bluetooth-Sim900a-Computer-Control-Calling-With-Antenna-p-1315614.html?rmmds=myorder&amp;cur_warehouse=CN"" rel=""nofollow noreferrer"">this USB-to-GSM Serial-GPRS-SIM800C module</a> and I have successfully been able to send AT commands to it and do stuffs, but what I really wanted was Text to speech capabilities, I was able to generate an AMR audio file, upload it unto the module's internal memory and play it whenever some one calls.</p>
+<p>But the message heard by caller's is going to be dynamic and TTS will run realtime, so the uploading process of the audio file into the module will cause undesirable delay, is there any way I could stream some audio through the module?</p>
+<p>Thanks.</p>
+","text-to-speech,audio-streaming,gsm,sim800",56909155,0,3
+66,biomod2 not plotting data,"<p>I am trying to run an elementary species distribution model, and <code>biomod2</code> is not plotting my presence data. I can attempt to recreate the problem here, but obviously I am unable to upload the tif file I am working with. To test it, I simply created a matrix of longitude/latitude values corresponding to a straight vertical line in Colombia, as follows:</p>
+<pre><code>tmp &lt;- seq(-1,10,0.01) # latitude
+tmp2 &lt;- rep(-75,length(tmp)) # longitude
+testVec &lt;- cbind(tmp2,tmp)
+myRespXY &lt;- testVec
+</code></pre>
+<p>These are the coordinates of my presence data. I then <em>only</em> use presence data, so I have</p>
+<pre><code>myResp &lt;- as.numeric(rep(1,nrow(myRespXY)))
+</code></pre>
+<p>Then, using the formatting function for <code>biomod2</code>,</p>
+<pre><code>myBiomodData &lt;- BIOMOD_FormatingData(resp.var = myResp, # presence data (all 1's)
+                                 expl.var = myExpl, # RasterStack
+                                 resp.xy = myRespXY, # coordinates of presences, corresponding to a vertical line in Colombia
+                                 resp.name = myRespName) # name of species
+plot(myBiomodData)
+</code></pre>
+<p><img src=""https://i.stack.imgur.com/m8AXL.png"" alt=""map"" /></p>
+<p>What am I doing wrong? <code>biomod2</code> is reading the presences, and sometimes it will plot a few points, but it doesn't plot most of them. How can I get the output to plot all of the presence data?</p>
+","r,bioinformatics",56992347,0,3
+67,PYTHON 3x Pyaudio not installing,"<p>I have been trying to install pyaudio using cmd on my windows pc which has a python 3x installed. the problem is that i have a microsoft c++ 14.0 installed but its still not installing.Showing error:</p>
+
+<pre><code>error: Microsoft Visual C++ 14.0 is required. Get it with ""Microsoft Visual C++ Build Tools"": https://visualstudio.microsoft.com/downloads/
+    ----------------------------------------
+ERROR: Command errored out with exit status 1: 'c:\users\user\appdata\local\programs\python\python37-32\python.exe' -u -c 'import sys, setuptools, tokenize; sys.argv[0] = '""'""'C:\\Users\\user\\AppData\\Local\\Temp\\pip-install-sg1dypbc\\PyAudio\\setup.py'""'""'; __file__='""'""'C:\\Users\\user\\AppData\\Local\\Temp\\pip-install-sg1dypbc\\PyAudio\\setup.py'""'""';f=getattr(tokenize, '""'""'open'""'""', open)(__file__);code=f.read().replace('""'""'\r\n'""'""', '""'""'\n'""'""');f.close();exec(compile(code, __file__, '""'""'exec'""'""'))' install --record 'C:\Users\user\AppData\Local\Temp\pip-record-cu3rluqm\install-record.txt' --single-version-externally-managed --compile Check the logs for full command output.
+</code></pre>
+",python,57242361,0,3
+68,Is Amazon DocumentDB capable of using gridFS,"<p>I am working with a client which needs grid-fs and wants to use a managed database service.  I am not familiar at all with amazon's DocumentDB and whether it is compatible with gridFS.  I could not find the question answered anywhere.</p>
+","amazon-web-services,gridfs,aws-documentdb,aws-documentdb-mongoapi",56977072,57031073,1
+69,Excel Match Index multiple criteria and multiple dates,"<p><a href=""https://i.stack.imgur.com/GlSAK.png"" rel=""nofollow noreferrer""><img src=""https://i.stack.imgur.com/GlSAK.png"" alt=""enter image description here""></a></p>
+
+<pre><code>=INDEX(D1:D6;MATCH(1;(E1=A1:A6)*(E2=B2:B6)*(DATEVALUE(MID(E3;1;10))&gt;=DATEVALUE(MID(C1:C6;1;10)));0))
+</code></pre>
+
+<p>I have an excel file that has prices per productId combination ( columns A and B ) and by effective dates. 
+As you can see it may contain duplicates for the productId combination and they are valid only after the date has passed. 
+This is the formula i came up with till now but it only works if the rows are sorted by A B and C ( especially C should be sorted descending). 
+In the example i am expecting the correct result price to be 600.00 but it returns 200.00 . </p>
+
+<p>I understand why this happens. But i don't know how to fix it and make it work correctly. 
+Correctly means : </p>
+
+<p>Give the product ids:
+D318JV  00B6   </p>
+
+<p>if effectiveDate >= 07/18/2019 00:00:00   =>  600.00</p>
+
+<p>if effectiveDate between 07/07/2019 00:00:00  AND 07/18/2019    =>  400.00</p>
+
+<p>if effectiveDate between 06/01/2019 00:00:00  AND 07/07/2019    =>  200.00 </p>
+
+<p>if effectiveDate before 06/01/2019 00:00:00  => N/A  </p>
+
+<p>Any help to make this formula work will be appreciated</p>
+","excel,indexing,excel-formula,match,formula",56992150,0,3
+70,Setting docker env var from build secret,"<p>Is there a way to set environment variables from the new docker <a href=""https://docs.docker.com/develop/develop-images/build_enhancements/"" rel=""noreferrer"">build enhancements</a>? </p>
+
+<p>Have tried </p>
+
+<pre><code>RUN --mount=type=secret,id=secret export SECRET=`/run/secrets/secret
+RUN --mount=type=secret,id=secret ENV SECRET=`/run/secrets/secret
+</code></pre>
+
+<p>Both doesn't work. Or is setting secrets on environment variables on dockerfile bad? Since running <code>docker history</code> to the env var being set in plain text. If that's the case, what's the best way to set the env var as secured as possible?</p>
+","docker,dockerfile",56865849,0,3
+71,Error Crawling Data Twitter With R Programming,"<p>How do I fix an error like this:</p>
+
+<pre><code>library(twitteR)
+library(ROAuth)
+customer_key&lt;-""-aaaaaa""
+customer_secret&lt;-""aaaaaaaa""
+access_token&lt;-""212123213-aaaaa""
+access_secret&lt;-""ccccccccccccc""
+setup_twitter_oauth(customer_key,customer_secret,access_token,access_secret)
+Tweets = searchTwitter(""anxiety"", n=100, lang = ""en"")
+</code></pre>
+
+<blockquote>
+  <p>Error: invalid assignment for reference class field ‘language’, should be from class “character” or a subclass (was class “NULL”)</p>
+</blockquote>
+
+<p>I User RStudio for run this source code, this is my first time using the twitter API. before I saw the tutorial and they succeeded, after I tried it and there was an error like that. thankyou</p>
+","r,twitter,twitter-oauth",56879351,0,3
+72,What is imageData in JSON file which comes from labelme tool?,"<p>I am trying to convert <strong>VIA (VGG Image Annotator) JSON file</strong> to <strong>Labelme JSON file</strong>, but the only problem is imageData attribute in Labelme. I am not able to upload my JSON file into Labelme tool without imageData. Does Anyone has idea how to get imageData or anything which is useful to solve this problem.</p>
+",data-annotations,57004792,0,2
+73,Jackson deserialize elasticsearch long as LocalDateTime with Java 8,"<p>We have a date field being populated with a <code>long</code> in elasticsearch index.</p>
+
+<p>The field mapping is:</p>
+
+<pre><code>@Field(type = FieldType.Date)
+@JsonFormat(shape = JsonFormat.Shape.NUMBER_INT)
+private LocalDateTime created;
+</code></pre>
+
+<p>And I use <code>Jackson</code> <code>JavaTimeModule</code> and <code>Jdk8Module</code> with this configuration:</p>
+
+<pre><code>@Bean
+public ElasticsearchOperations elasticsearchTemplate() {
+   return new ElasticsearchRestTemplate(client(), new CustomEntityMapper());
+}
+
+public static class CustomEntityMapper implements EntityMapper {
+
+        private final ObjectMapper objectMapper;
+
+        public CustomEntityMapper() {
+            //we use this so that Elasticsearch understands LocalDate and LocalDateTime objects
+            objectMapper = new ObjectMapper()
+                              .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+                              .configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true)
+                              .configure(DeserializationFeature.READ_DATE_TIMESTAMPS_AS_NANOSECONDS, false)
+                              .configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)
+                              .configure(SerializationFeature.WRITE_DATE_TIMESTAMPS_AS_NANOSECONDS, false)
+                              //MUST be registered BEFORE calling findAndRegisterModules
+                              .registerModule(new JavaTimeModule())
+                              .registerModule(new Jdk8Module());
+            //only autodetect fields and ignore getters and setters for nonexistent fields when serializing/deserializing
+            objectMapper.setVisibility(objectMapper.getSerializationConfig().getDefaultVisibilityChecker()
+                            .withFieldVisibility(JsonAutoDetect.Visibility.ANY)
+                            .withGetterVisibility(JsonAutoDetect.Visibility.NONE)
+                            .withSetterVisibility(JsonAutoDetect.Visibility.NONE)
+                            .withCreatorVisibility(JsonAutoDetect.Visibility.NONE));
+            //load the other available modules as well
+            objectMapper.findAndRegisterModules();
+        }
+
+        @Override
+        public String mapToString(Object object) throws IOException {
+            return objectMapper.writeValueAsString(object);
+        }
+
+        @Override
+        public &lt;T&gt; T mapToObject(String source, Class&lt;T&gt; clazz) throws IOException {
+            return objectMapper.readValue(source, clazz);
+        }
+}
+</code></pre>
+
+<p>But when I try to parse an entity in the index with a field such as:</p>
+
+<pre><code>""created"" : 1563448935000
+</code></pre>
+
+<p>I get an error:</p>
+
+<pre><code>com.fasterxml.jackson.databind.exc.MismatchedInputException: Unexpected token (VALUE_NUMBER_INT), expected VALUE_STRING: Expected array or string.
+</code></pre>
+
+<p>I think, it is possible to deserialize a <code>long</code> to a date, but I don't see what I am missing.</p>
+
+<p>If I map it to <code>Long</code> it works of course and same if the value is stored as <code>String</code> and we shape it and format properly in <code>@JsonFormat</code>. But is it possible to have <code>long-&gt;LocalDateTime</code> as well?</p>
+","java,spring-boot,elasticsearch,jackson,jackson-databind",57098784,57102453,1
+74,How to add a package from command line?,"<p><code>npm</code> (and so <code>yarn</code>) has a greate feature that you can add needed packages just by knowing the package name (like <code>yarn add xxx_yyy</code>) and it adds the latest stable release to your project. Does flutter have any equivalent hero? Or we have search our needed package on <a href=""https://pub.dev/"" rel=""nofollow noreferrer"">pub.dev</a> and find version to add to our <code>pubspec.yaml</code>?</p>
+","flutter,command-line,terminal,package",57213340,57223755,3
+75,The reply URL returns error using https://xxxxx.azurewebsites.net/xxxxxxx/ and works well using https://xxxxx.azurewebsites.net/,"<p>I'm facing issue with the reply URL when authenticating on an Azure website. Everything works well when logging in normally, but it generates the ""reply URL"" error when logging in using some other pages. </p>
+
+<p>As an example, using ""<a href=""https://xxxxx.azurewebsites.net/"" rel=""nofollow noreferrer"">https://xxxxx.azurewebsites.net/</a>"" works well, but using ""<a href=""https://xxxxxx.azurewebsites.net/xxxxxxxx/"" rel=""nofollow noreferrer"">https://xxxxxx.azurewebsites.net/xxxxxxxx/</a>"" returns the following error: </p>
+
+<blockquote>
+  <p><code>AADSTS50011</code>: The reply url specified in the request does not match the reply urls configured for the application: 'XX2782c9-XXXX-XXXX-9789-XX750058XXXX'.  </p>
+</blockquote>
+
+<p>I have also tried using the instructions from <a href=""https://docs.microsoft.com/en-us/azure/active-directory/develop/quickstart-configure-app-access-web-apis#add-redirect-uris-to-your-application"" rel=""nofollow noreferrer"">Microsoft’s documentation</a> on configuring the reply URL settings.</p>
+
+<p>Error with: 
+<a href=""https://login.microsoftonline.com/common/oauth2/authorize?response_type=id_token&amp;client_id=XXXX82c9-6873-4096-XXXX-02750058XXXX&amp;redirect_uri=https%3A%2F%2Fxxxxxxxxx.azurewebsites.net%2Fdashboard&amp;state=xxxx2209-5986-4ce3-8498-8863daaxxxx&amp;client-request-id=xxxxfcfa-fb5e-409e-834e-5fd4666bxxxx&amp;x-client-SKU=Js&amp;x-client-Ver=1.0.15&amp;nonce=db5d9934-818a-43ad-98df-f1ced93f358d"" rel=""nofollow noreferrer"">https://login.microsoftonline.com/common/oauth2/authorize?response_type=id_token&amp;client_id=XXXX82c9-6873-4096-XXXX-02750058XXXX&amp;redirect_uri=https%3A%2F%2Fxxxxxxxxx.azurewebsites.net%2Fdashboard&amp;state=xxxx2209-5986-4ce3-8498-8863daaxxxx&amp;client-request-id=xxxxfcfa-fb5e-409e-834e-5fd4666bxxxx&amp;x-client-SKU=Js&amp;x-client-Ver=1.0.15&amp;nonce=db5d9934-818a-43ad-98df-f1ced93f358d</a></p>
+
+<p>Works with:
+<a href=""https://login.microsoftonline.com/common/oauth2/authorize?response_type=id_token&amp;client_id=XXXX82c9-6873-4096-XXXX-02750058XXXX&amp;redirect_uri=https%3A%2F%2Fxxxxxxxxx.azurewebsites.net%2F&amp;state=xxxx2209-5986-4ce3-8498-8863daaxxxx&amp;client-request-id=xxxxfcfa-fb5e-409e-834e-5fd4666bxxxx&amp;x-client-SKU=Js&amp;x-client-Ver=1.0.15&amp;nonce=db5d9934-818a-43ad-98df-f1ced93f358d"" rel=""nofollow noreferrer"">https://login.microsoftonline.com/common/oauth2/authorize?response_type=id_token&amp;client_id=XXXX82c9-6873-4096-XXXX-02750058XXXX&amp;redirect_uri=https%3A%2F%2Fxxxxxxxxx.azurewebsites.net%2F&amp;state=xxxx2209-5986-4ce3-8498-8863daaxxxx&amp;client-request-id=xxxxfcfa-fb5e-409e-834e-5fd4666bxxxx&amp;x-client-SKU=Js&amp;x-client-Ver=1.0.15&amp;nonce=db5d9934-818a-43ad-98df-f1ced93f358d</a> </p>
+
+<p>It should work with the both reply URLs, however.</p>
+","azure-active-directory,azure-web-app-service,azure-authentication",56845776,0,3
+76,How to connect nginx to local mongodb,"<p>I've got nginx to run my (node.js/react) application on the server. But I can't seem to connect to the database. </p>
+
+<p>In the nginx.conf file I've added the following inside http.</p>
+
+<pre><code>http {
+    ...
+    server {
+        listen       80;
+        server_name  localhost;
+    ...}
+...}
+</code></pre>
+
+<p>And above the http section I have the following,</p>
+
+<pre><code>stream {
+    server {
+        listen  4000;
+        proxy_connect_timeout 1s;
+        proxy_timeout 3s;
+        proxy_pass    stream_mongo_backend;
+    }
+
+    upstream stream_mongo_backend {
+      server 127.0.0.1:27017;
+  }
+}
+</code></pre>
+
+<p>I start the nginx server, the application runs on localhost, opens up the login page but I can't login because it's still not connected to the database (mongodb). 
+I'm not sure if I've got my port numbers wrong or if I'm missing some configuration line inside nginx.conf. </p>
+
+<p>EDIT: Ok, I had it wrong before. I wasn't supposed to connect to mongodb at this point. I was supposed to connect to the backend server of my application which would run at 4000. So now I've added a new location for /api/ inside http and proxied all requests to 4000. I still have one question though. I have to run my backend server separately for this to work. For the frontend I've created a folder and put all my build files in there so nginx starts up the webserver from there. Doing the same for the backend did not start up the server. Is there a way to get nginx to start the backend server as well? 
+Also can I get the frontend to run directly without the build files ? Like node would with npm start?</p>
+","node.js,reactjs,mongodb,nginx",56887810,0,2
+77,How do I run nvidia-smi on Windows?,"<p><code>nvidia-smi</code> executed in a Command Prompt (CMD) in Windows returns the following error</p>
+<pre><code>C:\Users&gt;nvidia-smi
+'nvidia-smi' is not recognized as an internal or external command,
+operable program or batch file.
+</code></pre>
+<p>Where is it located? CUDA is installed already.</p>
+","windows,nvidia",57100015,57100016,3
+78,why my app work perfect in debug mode and crash in release mode?,"<p>hey there i am new with react native i created an app everything works perfect when i debug it but when i build it it crash in a screen and give me this errors </p>
+
+<p>2019-07-05 12:29:53.403 21905-21925/? E/AndroidRuntime: FATAL EXCEPTION: mqt_native_modules
+    Process: com.foo, PID: 21905
+    com.facebook.react.common.JavascriptException: Requiring unknown module ""./locale/fr""., stack:
+    h@2:1448
+    d@2:868
+    Dt@714:16712
+    Tt@714:17738
+    Yt@714:16801
+    n@713:2042
+    Sn@90:30120
+    Or@90:45887
+    na@90:72881
+    ra@90:73371
+    Oa@90:80972
+    Wa@90:80310
+    Ue@90:83367
+    De@90:13673
+    We@90:13846
+    receiveTouches@90:14605
+    value@28:3311
+    @28:822
+    value@28:2565
+    value@28:794
+    value@-1</p>
+
+<pre><code>    at com.facebook.react.modules.core.ExceptionsManagerModule.showOrThrowError(ExceptionsManagerModule.java:54)
+    at com.facebook.react.modules.core.ExceptionsManagerModule.reportFatalException(ExceptionsManagerModule.java:38)
+    at java.lang.reflect.Method.invoke(Native Method)
+    at com.facebook.react.bridge.JavaMethodWrapper.invoke(JavaMethodWrapper.java:372)
+    at com.facebook.react.bridge.JavaModuleWrapper.invoke(JavaModuleWrapper.java:158)
+    at com.facebook.react.bridge.queue.NativeRunnable.run(Native Method)
+    at android.os.Handler.handleCallback(Handler.java:836)
+    at android.os.Handler.dispatchMessage(Handler.java:103)
+    at com.facebook.react.bridge.queue.MessageQueueThreadHandler.dispatchMessage(MessageQueueThreadHandler.java:29)
+    at android.os.Looper.loop(Looper.java:203)
+    at com.facebook.react.bridge.queue.MessageQueueThreadImpl$4.run(MessageQueueThreadImpl.java:232)
+    at java.lang.Thread.run(Thread.java:761)
+</code></pre>
+
+<p>here is my code there two places when i am working with moment here the first one : </p>
+
+<pre><code>import 'moment/locale/fr';
+import moment from 'moment';
+
+this.state = { 
+      date: moment().locale('fr').format('dddd HH:mm');
+}
+and set the state to a Text 
+
+</code></pre>
+
+<p>the second one is this class </p>
+
+<pre><code>import 'moment/locale/fr';
+import moment from 'moment';
+
+componentDidMount() {
+   console.log(this.props.hours[0].openAt); 
+   const date = new Date();
+   const day = date.getDay();
+   moment.locale('fr');
+   for (let i = 0; i &lt; this.props.hours.length; i++) {
+       if (this.props.hours[i].day === day) {
+           const format = 'hh:mm';
+           const time = moment(date, format);
+           const beforeTime = moment(this.props.hours[i].openAt, format);
+            const afterTime = moment(this.props.hours[i].closeAt, format);
+
+           if (time.isBetween(beforeTime, afterTime)) {
+             this.setState({
+                 ouvert: true
+             });
+           } else {
+               this.setState({
+                   ouvert: false
+               });
+           }
+       }
+   }
+   }
+</code></pre>
+","react-native,react-native-android",56902568,0,1
+79,Visual Studio Code terminal messy after update,"<p>Visual Studio Code just updated. This update destroyed the entire looks of the integrated terminal. Spacing between letters seems to be set to some absurd high number.</p>
+
+<p>Does anyone know how I can fix this so the terminal will look as it did before the update?</p>
+
+<p>This is what it currently looks like.
+<a href=""https://i.stack.imgur.com/pNKBR.png"" rel=""nofollow noreferrer""><img src=""https://i.stack.imgur.com/pNKBR.png"" alt=""enter image description here""></a></p>
+",visual-studio-code,56986042,0,3
+80,docker build failed after pip installed requirements with exit code 137,"<p>I am starting a new django project and want to dockerize the project, on my ubuntu. when I run <code>docker-compose up --build</code> I got a strange Error. It seems that it has problem with pip install requirements.</p>
+
+<p>I have tried to search for the meaning of ""exit code 137"", most say it is ""out of memory"" but it doesn't seem like that in my case.</p>
+
+<p>Dockerfile:</p>
+
+<pre><code>FROM python:3.6
+ENV PYTHONUNBUFFERED 1
+
+RUN apt-get update &amp;&amp; apt-get install apt-transport-https
+RUN pip install --no-cache-dir pipenv
+
+RUN mkdir /my-django
+WORKDIR /my-django
+ADD requirements.txt /my-django/
+
+RUN pip install -r requirements.txt
+</code></pre>
+
+<p>docker-compose.yml:</p>
+
+<pre><code>version: '3'
+
+services:
+  db:
+    image: postgres:11
+    restart: unless-stopped
+    volumes:
+      - trkr-data:/var/lib/postgresql/data
+    ports:
+      - 11000:5432
+    environment:
+      - POSTGRES_DB='myDB'
+      - POSTGRES_USER='myDB'
+      - POSTGRES_PASSWORD='myDB'
+
+  web:
+    build: .
+    restart: on-failure
+    container_name: my-django
+    image: trkr_web:latest
+    volumes:
+      - .:/my-django
+    env_file:
+      - ./.env
+    command: python manage.py migrate &amp;&amp; python manage.py runserver 0.0.0.0:8000
+    ports:
+      - ""8000:8000""
+    depends_on:
+      - db
+
+#sepcify volumes
+volumes:
+  my-data:
+</code></pre>
+
+<p>when I run <code>make up</code> (I have a Makefile with up: docker-compose up --build), I got the following error message:</p>
+
+<pre><code>......
+Collecting Django==2.2.3 (from -r requirements.txt (line 1))
+  Downloading https://files.pythonhosted.org/packages/39/b0/2138c31bf13e17afc32277239da53e9dfcce27bac8cb68cf1c0123f1fdf5/Django-2.2.3-py3-none-any.whl (7.5MB)
+Collecting django-environ==0.4.5 (from -r requirements.txt (line 2))
+  Downloading https://files.pythonhosted.org/packages/9f/32/76295a1a5d00bf556c495216581c6997e7fa5f533b2229e0a9d6cbaa95ae/django_environ-0.4.5-py2.py3-none-any.whl
+Collecting pipenv==2018.10.13 (from -r requirements.txt (line 3))
+  Downloading https://files.pythonhosted.org/packages/90/06/0008f53835495fbbf6e31ced9119b8f517e1271bdefcf0d04aaa9f28dbf4/pipenv-2018.10.13-py3-none-any.whl (5.2MB)
+Collecting psycopg2-binary==2.7.5 (from -r requirements.txt (line 4))
+  Downloading https://files.pythonhosted.org/packages/3f/4e/b9a5cb7c7451029f67f93426cbb5f5bebedc3f9a8b0a470de7d0d7883602/psycopg2_binary-2.7.5-cp36-cp36m-manylinux1_x86_64.whl (2.7MB)
+Collecting pytz (from Django==2.2.3-&gt;-r requirements.txt (line 1))
+  Downloading https://files.pythonhosted.org/packages/3d/73/fe30c2daaaa0713420d0382b16fbb761409f532c56bdcc514bf7b6262bb6/pytz-2019.1-py2.py3-none-any.whl (510kB)
+Collecting sqlparse (from Django==2.2.3-&gt;-r requirements.txt (line 1))
+  Downloading https://files.pythonhosted.org/packages/ef/53/900f7d2a54557c6a37886585a91336520e5539e3ae2423ff1102daf4f3a7/sqlparse-0.3.0-py2.py3-none-any.whl
+Requirement already satisfied: pip&gt;=9.0.1 in /usr/local/lib/python3.6/site-packages (from pipenv==2018.10.13-&gt;-r requirements.txt (line 3)) (18.1)
+Requirement already satisfied: virtualenv in /usr/local/lib/python3.6/site-packages (from pipenv==2018.10.13-&gt;-r requirements.txt (line 3)) (16.7.2)
+Requirement already satisfied: certifi in /usr/local/lib/python3.6/site-packages (from pipenv==2018.10.13-&gt;-r requirements.txt (line 3)) (2019.6.16)
+Requirement already satisfied: virtualenv-clone&gt;=0.2.5 in /usr/local/lib/python3.6/site-packages (from pipenv==2018.10.13-&gt;-r requirements.txt (line 3)) (0.5.3)
+Requirement already satisfied: setuptools&gt;=36.2.1 in /usr/local/lib/python3.6/site-packages (from pipenv==2018.10.13-&gt;-r requirements.txt (line 3)) (40.6.2)
+Installing collected packages: pytz, sqlparse, Django, django-environ, pipenv, psycopg2-binary
+  Found existing installation: pipenv 2018.11.26
+    Uninstalling pipenv-2018.11.26:
+      Successfully uninstalled pipenv-2018.11.26
+Successfully installed Django-2.2.3 django-environ-0.4.5 pipenv-2018.10.13 psycopg2-binary-2.7.5 pytz-2019.1 sqlparse-0.3.0
+Killed
+ERROR: Service 'web' failed to build: The command '/bin/sh -c pip install -r requirements.txt' returned a non-zero code: 137
+Makefile:2: recipe for target 'up' failed
+</code></pre>
+
+<blockquote>
+  <p>This problem is solved by <code>RUN pip3 install --no-cache-dir -r requirements.txt</code></p>
+</blockquote>
+","docker,pip,docker-compose,dockerfile",57291806,0,3
+81,invalid sign in external &quot;numeric&quot; value error from Npgsql Binary copy,"<p>I get this error on using Npgsql Binary copy (see my implementation at the bottom):</p>
+
+<pre><code>invalid sign in external ""numeric"" value
+</code></pre>
+
+<p>The  RetailCost column on which it fails has the following PostgreSQL properties:</p>
+
+<ul>
+<li>type:     numeric(19,2) </li>
+<li>nullable: not null </li>
+<li>storage:  main </li>
+<li>default:  0.00</li>
+</ul>
+
+<p>The PostgreSQL log looks like this:</p>
+
+<pre><code>2019-07-15 13:24:05.131 ACST [17856] ERROR:  invalid sign in external ""numeric"" value
+2019-07-15 13:24:05.131 ACST [17856] CONTEXT:  COPY products_temp, line 1, column RetailCost
+2019-07-15 13:24:05.131 ACST [17856] STATEMENT:  copy products_temp (...) from stdin (format binary)
+</code></pre>
+
+<p>I don't think it should matter, but there are only zero or positive RetailCost values (no negative or null ones)</p>
+
+<p>My implementation looks like this:</p>
+
+<pre><code>using (var importer = conn.BeginBinaryImport($""copy {tempTableName} ({dataColumns}) from stdin (format binary)""))
+{
+    foreach (var product in products)
+    {
+        importer.StartRow();
+        importer.Write(product.ManufacturerNumber, NpgsqlDbType.Text);
+        if (product.LastCostDateTime == null)
+            importer.WriteNull();
+        else
+            importer.Write((DateTime)product.LastCostDateTime, NpgsqlDbType.Timestamp); 
+        importer.Write(product.LastCost, NpgsqlDbType.Numeric);
+        importer.Write(product.AverageCost, NpgsqlDbType.Numeric);
+        importer.Write(product.RetailCost, NpgsqlDbType.Numeric);
+        if (product.TaxPercent == null)
+            importer.WriteNull();
+        else
+            importer.Write((decimal)product.TaxPercent, NpgsqlDbType.Numeric); 
+        importer.Write(product.Active, NpgsqlDbType.Boolean);
+        importer.Write(product.NumberInStock, NpgsqlDbType.Bigint);
+    }
+    importer.Complete();
+}
+</code></pre>
+
+<p>Any suggestions would be welcome</p>
+",npgsql,57033327,0,3
+82,"NoSuchMethodError was thrown building Home(dirty, state: HomeState#0a71e): The getter &#39;displayName&#39; was called on null","<p>I'm trying to get UserEmail and UserName form FirebaseAuth and i'm getting the result 100% right but it throws error-&gt; &quot;The getter 'displayName' was called on null.&quot; &quot;Receiver: null&quot; &quot;Tried calling: displayName&quot;</p>
+<pre><code>class HomeState extends State&lt;Home&gt; {
+    String accountStatus = '******';
+    FirebaseUser mCurrentUser;
+    FirebaseAuth _auth;
+    @override
+   void initState() {
+      super.initState();
+      _auth = FirebaseAuth.instance;
+      _getCurrentUser();
+    }
+   _getCurrentUser () async {
+      mCurrentUser = await _auth.currentUser();
+      print('Hello ' + mCurrentUser.displayName.toString());
+      print('Email ' + mCurrentUser.email.toString());
+      setState(() {
+        mCurrentUser != null ? accountStatus = 'Signed In' : 'Not Signed In';
+    });
+}
+</code></pre>
+<p>here is a error</p>
+<pre><code>I/flutter (11647): ══╡ EXCEPTION CAUGHT BY WIDGETS LIBRARY ╞═══════════════════════════════════════════════════════════
+I/flutter (11647): The following NoSuchMethodError was thrown building Home(dirty, state: HomeState#0a71e):
+I/flutter (11647): The getter 'displayName' was called on null.
+I/flutter (11647): Receiver: null
+I/flutter (11647): Tried calling: displayName
+I/flutter (11647): 
+I/flutter (11647): When the exception was thrown, this was the stack:
+I/flutter (11647): #0      Object.noSuchMethod (dart:core-patch/object_patch.dart:50:5)
+I/flutter (11647): #1      HomeState.build (package:shopping_zone/UI/Home.dart:58:61)
+I/flutter (11647): #2      StatefulElement.build (package:flutter/src/widgets/framework.dart:4012:27)
+.
+.
+.
+.
+I/flutter (11647): Hello Lina
+I/flutter (11647): Email lina19@gmail.com
+</code></pre>
+","flutter,dart",57245365,57245395,1
+83,XLRDError: Excel 2007 xlsb file; not supported,"<p>I'm trying to read excel binary file and import data to SQL Server 2012 or 2017
+Below is Python code written using Spyder (Python 3.6)</p>
+
+<pre><code>            import pandas as pd
+            import pyodbc
+            import xlrd
+            server = 'ComputerNamw\MSQLSERVER'
+            db = 'dbname'
+            conn = pyodbc.connect('DRIVER={SQL Server};SERVER='+server+';DATABASE='+db+';Trusted_Connection=yes')
+            cursor = conn.cursor()
+            data = pd.read_excel('C:\Foldername\ExcelBinary_File_v2.2.xlsb',
+                                 sheet_name = 'Data')
+</code></pre>
+
+<p>I'm getting this error:</p>
+
+<pre><code>             raise XLRDError('Excel 2007 xlsb file; not supported')
+
+                XLRDError: Excel 2007 xlsb file; not supported
+</code></pre>
+
+<p>The excel binary file is actually created using 64 bit Excel 2016. Then why its showing error related to Excel 2007? </p>
+
+<p>What could be the issue? How to resolve this?
+Thanks.</p>
+","excel,python-3.x,sql-server-2012,spyder,sql-server-2017",57075402,0,3
+84,Node js how to run axios.get every 2 seconds?,"<p>I am kinda of a newbie to node js, Here is what i am trying to do:  i am looping through a json file full of links of our website via the map function (around 3000 links), inside the loop i am doing a axios get for each link and getting the response status code(will do other things in the future). But i want to run the axios get only like every 2 seconds or 5 seconds otherwise i am overwhelming the webserver. I am trying to input async await but it's still too fast and server is taking a hit (i am technically DDos-ing my own website). I put a SetTimeout around the axios but that doesn't seem like it worked, since in the console results are printing way too fast. <strong>so the question is, how do i make each axios.get request wait every 2 seconds before running in the map loop?.</strong></p>
+
+<pre><code>var axios = require('axios');
+const fs = require('fs');
+var statusCheck = 0;
+
+var main = [];
+let rawdata = fs.readFileSync('C:/Users/jay/Documents/crawl/filtered2.json');
+let jsonParsed = JSON.parse(rawdata);
+
+jsonParsed.map(async(line) =&gt; {
+
+    var encodeLink = encodeURI(line.link);
+    const response = await axios.get(encodeLink).catch((err) =&gt; {
+        var Status_ErrorsCatchaxios = {
+            ""status Code"": err.response.status ? err.response.status : ""No status code available"",
+            ""Page title:"": $('title').text() ? $('title').text() : 'No title avaialble',
+            ""Original Link"": encodeLink ? encodeLink : ""No Original Link Available"",
+            ""errorCode"": err
+        }
+        main.push(Status_ErrorsCatchaxios)
+    })
+    try {
+        console.log(response.status)
+
+        statusCheck = statusCheck + 1;
+        console.log(""Link: "", statusCheck)
+    } catch (error) {
+        console.log(error)
+    }
+})
+</code></pre>
+","javascript,node.js,asynchronous,axios",56876990,56877118,1
+85,dataclasses: how to ignore None values using asdict()?,"<pre><code>@dataclass
+class Car:
+    brand: str
+    color: str
+</code></pre>
+
+<p>How can I get a dict that ignore None values? Something like:</p>
+
+<pre><code>&gt;&gt;&gt; car = Car(brand=""Audi"", color=None)
+&gt;&gt;&gt; asdict(car, some_option_to_ignore_none_values=True)
+&gt; {'brand': 'Audi'}
+</code></pre>
+","python,python-dataclasses",56839030,56839195,1
+86,How to skip the first row when reading a csv file?,"<p>I have an awkward csv file and I need to skip the first row to read it.</p>
+
+<p>I'm doing this easily with python/pandas</p>
+
+<pre><code>df = pd.read_csv(filename, skiprows=1)
+</code></pre>
+
+<p>but I don't know how to do it in Go.</p>
+
+<pre><code>package main
+
+import (
+    ""encoding/csv""
+    ""fmt""
+    ""log""
+    ""os""
+)
+
+type mwericsson struct {
+    id     string
+    name   string
+    region string
+}
+
+func main() {
+
+    rows := readSample()
+
+    fmt.Println(rows)
+    //appendSum(rows)
+    //writeChanges(rows)
+}
+
+func readSample() [][]string {
+    f, err := os.Open(""D:/in/20190629/PM_IG30014_15_201906290015_01.csv"")
+    if err != nil {
+        log.Fatal(err)
+    }
+    rows, err := csv.NewReader(f).ReadAll()
+    f.Close()
+    if err != nil {
+        log.Fatal(err)
+    }
+    return rows
+}
+</code></pre>
+
+<p>Error:</p>
+
+<pre><code>2019/07/01 12:38:40 record on line 2: wrong number of fields
+</code></pre>
+
+<p><code>PM_IG30014_15_201906290015_01.csv</code>:</p>
+
+<pre><code>PTN Ethernet-Port RMON Performance,PORT_BW_UTILIZATION,2019-06-29 20:00:00,33366     
+DeviceID,DeviceName,ResourceName,CollectionTime,GranularityPeriod,PORT_RX_BW_UTILIZATION,PORT_TX_BW_UTILIZATION,RXGOODFULLFRAMESPEED,TXGOODFULLFRAMESPEED,PORT_RX_BW_UTILIZATION_MAX,PORT_TX_BW_UTILIZATION_MAX
+3174659,H1095,H1095-11-ISM6-1(to ZJBSC-V1),2019-06-29 20:00:00,15,22.08,4.59,,,30.13,6.98
+3174659,H1095,H1095-14-ISM6-1(to T6147-V),2019-06-29 20:00:00,15,2.11,10.92,,,4.43,22.45
+</code></pre>
+",go,56832149,56835389,1
+87,OAuth consent screen - ability to remove application logo,"<p>I added an application logo by mistake on the OAuth consent screen (URL: <a href=""https://console.cloud.google.com/apis/credentials/consent"" rel=""noreferrer"">https://console.cloud.google.com/apis/credentials/consent</a>), and now it says my consent screen requires verification by Google. </p>
+
+<p>Is there any way to remove the application logo from the consent screen?</p>
+
+<p><strong>Edit:</strong>
+I didn't make it clear before but I wanted to remove the logo to get rid of the verification notice.</p>
+","google-cloud-platform,google-api,google-oauth",56989198,57168008,2
+88,How to avoid cyclic dependencies without battling with the compiler in svelte?,"<p>I was reading the doc, and after tweaking its sample code, I managed to get compiler barked at me about cyclic dependencies like this:</p>
+
+<pre><code>&lt;script&gt;
+    let count = 0;
+    $: double = count * 2;
+
+    $: if (double &gt;= 20) {
+        alert(`count is dangerously high!`);
+        count = 9;
+    }
+
+    function handleClick() {
+        count += 1;
+    }
+&lt;/script&gt;
+
+&lt;button on:click={handleClick}&gt;
+    Clicked {count} {count === 1 ? 'time' : 'times'}
+&lt;/button&gt;
+</code></pre>
+
+<p>I asked on discord how to fix it, and people suggested that I should hide the dependencies from the compiler like this:</p>
+
+<pre><code>&lt;script&gt;
+    let count = 0;
+    $: double = count * 2;
+
+    function resetCount() {
+        count = 9;
+    }
+
+    $: if (double &gt;= 20) {
+        alert(`count is dangerously high!`);
+        resetCount();
+    }
+
+    function handleClick() {
+        count += 1;
+    }
+&lt;/script&gt;
+
+&lt;button on:click={handleClick}&gt;
+    Clicked {count} {count === 1 ? 'time' : 'times'}
+&lt;/button&gt;
+</code></pre>
+
+<p>It works, but I got a couple questions:</p>
+
+<ol>
+<li>Battling with the compiler doesn't sound right to me, is there any other better ways to fix this?</li>
+<li>A more general question is that does cyclic dependencies happen quite often to people who have written large amount of svelte code? Is it normal or it usually signals a bad design?</li>
+</ol>
+
+<p>Thanks.</p>
+","javascript,reactive-programming,svelte",56990786,0,1
+89,Solving environment: failed,"<p>when i tried to install OpenCV3 it is showing this error and other libraries are installing... </p>
+
+<pre><code>(base) C:\WINDOWS\system32&gt;conda install -c menpo opencv3
+Collecting package metadata (current_repodata.json): done
+Solving environment: failed
+Collecting package metadata (repodata.json): done
+Solving environment: failed
+
+UnsatisfiableError: The following specifications were found to be incompatible with each other:
+
+  - _ipyw_jlab_nb_ext_conf -&gt; ipywidgets -&gt; widgetsnbextension[version='&gt;=1.2.3'] -&gt; notebook[version='&gt;=4.2.0'] -&gt; nbconvert -&gt; bleach
+  - bleach
+  - ipywidgets -&gt; widgetsnbextension[version='&gt;=1.2.3'] -&gt; notebook[version='&gt;=4.2.0'] -&gt; nbconvert -&gt; bleach
+  - jupyterlab -&gt; jupyterlab_server[version='&gt;=0.2.0,&lt;0.3.0'] -&gt; notebook -&gt; nbconvert -&gt; bleach
+  - jupyterlab_server -&gt; notebook -&gt; nbconvert -&gt; bleach
+  - nbconvert -&gt; bleach
+  - notebook -&gt; nbconvert -&gt; bleach
+  - pip -&gt; python[version='&gt;=3.6,&lt;3.7.0a0']
+  - widgetsnbextension -&gt; notebook[version='&gt;=4.2.0'] -&gt; nbconvert -&gt; bleach
+
+
+</code></pre>
+","python-3.x,anaconda,opencv3.0,environment,failed-installation",57035522,57215001,3
+90,Line numbers/ line height for a Qml TextArea,"<p>We want to implement an embedded code editor in our QtQuick based application. For highlighting we use a <code>QSyntaxHighlighter</code> based on <code>KSyntaxHighlighting</code>. We found no way to determine the line height and line spacing that would allow us to display line numbers next to the code. Supporting dynamic line-wrap would also be a great addition.</p>
+
+<pre><code>    Flickable {
+            id: flickable
+            flickableDirection: Flickable.VerticalFlick
+            Layout.preferredWidth: parent.width
+            Layout.maximumWidth: parent.width
+            Layout.minimumHeight: 200
+            Layout.fillHeight: true
+            Layout.fillWidth: true
+
+            boundsBehavior: Flickable.StopAtBounds
+            clip: true
+            ScrollBar.vertical: ScrollBar {
+                width: 15
+                active: true
+                policy: ScrollBar.AlwaysOn
+            }
+
+            property int rowHeight: textArea.font.pixelSize+3
+            property int marginsTop: 10
+            property int marginsLeft: 4
+            property int lineCountWidth: 40
+
+            Column {
+                id: lineNumbers
+                anchors.left: parent.left
+                anchors.leftMargin: flickable.marginsLeft
+                anchors.topMargin:   flickable.marginsTop
+                y:  flickable.marginsTop
+                width: flickable.lineCountWidth
+
+                function range(start, end) {
+                    var rangeArray = new Array(end-start);
+                    for(var i = 0; i &lt; rangeArray.length; i++){
+                        rangeArray[i] = start+i;
+                    }
+                    return rangeArray;
+                }
+
+                Repeater {
+                    model: textArea.lineCount
+                    delegate:
+                    Label {
+                        color: (!visualization.urdfPreviewIsOK &amp;&amp; (index+1) === visualization.urdfPreviewErrorLine) ? ""white"" :  ""#666""
+                        font: textArea.font
+                        width: parent.width
+                        horizontalAlignment: Text.AlignRight
+                        verticalAlignment: Text.AlignVCenter
+                        height: flickable.rowHeight
+                        renderType: Text.NativeRendering
+                        text: index+1
+                        background: Rectangle {
+                            color: (!visualization.urdfPreviewIsOK &amp;&amp; (index+1) === visualization.urdfPreviewErrorLine) ? ""red"" : ""white""
+                        }
+                    }
+                }
+            }
+            Rectangle {
+                y: 4
+                height: parent.height
+                anchors.left: parent.left
+                anchors.leftMargin: flickable.lineCountWidth + flickable.marginsLeft
+                width: 1
+                color: ""#ddd""
+            }
+
+        TextArea.flickable: TextArea {
+                id: textArea
+
+                property bool differentFromSavedState: fileManager.textDifferentFromSaved
+
+                text: fileManager.textTmpState
+                textFormat: Qt.PlainText
+                //dont wrap to allow for easy line annotation wrapMode: TextArea.Wrap
+                focus: false
+                selectByMouse: true
+                leftPadding: flickable.marginsLeft+flickable.lineCountWidth
+                rightPadding: flickable.marginsLeft
+                topPadding: flickable.marginsTop
+                bottomPadding: flickable.marginsTop
+
+                background: Rectangle {
+                    color: ""white""
+                    border.color: ""green""
+                    border.width: 1.5
+                }
+
+                Component.onCompleted: {
+                    fileManager.textEdit = textArea.textDocument
+                }
+
+                onTextChanged: {
+                    fileManager.textTmpState = text
+                }
+
+                function update()
+                {
+                    text = fileManager.textTmpState
+                }
+            }
+        }
+</code></pre>
+
+<p>As you can see we use <code>property int rowHeight: textArea.font.pixelSize+3</code> to guess the line height and line spacing but that of course breaks as soon as DPI or other properties of the system change.</p>
+","qt,qml,qtquick2,kde",56891708,56902942,1
+91,AWS Upload with multipart/form-data Invalid,"<p>I am sending a file to the presignedPOST url to upload to AWS S3 and in other resources I've found, to send a file with <code>form-data</code> is to switch to <code>multipart/form-data</code> to send a file.</p>
+
+<p>This is the form data I've created is this:</p>
+
+<pre><code>fields['file'] = new File([this.get_compressed_photo],manifest.photo, {type: ""image/jpeg""});
+var form = new FormData();
+
+for(let field in fields){
+    form.append(field+"""", fields[field]);
+}
+
+try {
+    response = await axios.post(my_url, form, {
+        headers : {
+            ""Content-Type"" : ""multipart/form-data"",
+        }
+    }); 
+}catch(error){
+    console.log(error);
+}
+</code></pre>
+
+<p>this is the field in the form in the PARAMs for the request:</p>
+
+<pre><code>Content-Disposition: form-data; name=""file""; filename=""file_name.jpg""
+Content-Type: image/jpeg
+
+function() {
+    [native code]
+}
+</code></pre>
+
+<p>Is something going wrong here?</p>
+
+<p>UPDATE:
+AWS does respond, but not with an error that is relevant to the file. I'm not sure if this means that the file is still valid, but just looking at the value for the image file, I'm not sure how.</p>
+
+<pre><code>&lt;Error&gt;&lt;Code&gt;SignatureDoesNotMatch&lt;/Code&gt;....
+</code></pre>
+
+<p>I'm using the <code>aws-sdk</code> and creating the presignedPOST url like so:</p>
+
+<pre><code>....
+    let path = process.env.PATH + identifier + ""/"" + file_name;
+    var url = false;
+
+    try{
+        const url = await s3.createPresignedPost({
+            Bucket: process.env.BUCKET,
+            Expires: (60 * 5),
+            Fields : {
+                key: path,
+                AWSAccessKeyId: process.env.KEY,
+            },
+        });
+        return url;
+    }catch(error){
+        return false;
+    }
+....
+</code></pre>
+
+<p>Do I still need to add a signature to this?</p>
+","javascript,amazon-web-services,http,amazon-s3,form-data",57011917,57101456,1
+92,How to assign TenantId to abpsession in login process API?,"<p>Application(aspnetboilerplate) is a standalone API service. For login used <strong>TokenAuthController/Authenticate</strong> as post request, it's logging but cannot be getting the Tenant details there. As the <strong>AbpSession.TenantId</strong> is not set. Below is the code. Actually, I am getting null value for AbpSession when trying to fetch the records for a user with tenant login. But without a tenant, it's working fine.</p>
+
+<pre><code>   [AbpAllowAnonymous]
+    [HttpPost]
+    public async Task&lt;AuthenticateResultModel&gt; Authenticate([FromBody] AuthenticateModel model)
+    {
+        var loginResult = await GetLoginResultAsync(
+            model.UserNameOrEmailAddress,
+            model.Password,
+            GetTenancyNameOrNull()
+        );
+
+        var accessToken = CreateAccessToken(CreateJwtClaims(loginResult.Identity));
+        await _sessionAppService.GetCurrentLoginInformations();
+
+
+
+        return new AuthenticateResultModel
+        {
+            AccessToken = accessToken,
+            EncryptedAccessToken = GetEncrpyedAccessToken(accessToken),
+            ExpireInSeconds = (int)_configuration.Expiration.TotalSeconds,
+            UserId = loginResult.User.Id
+        };
+    }
+</code></pre>
+",".net,session,aspnetboilerplate,asp.net-boilerplate",56913453,0,1
+93,how to send error codes in nestjs app from controller?,"<p>How can i send error codes in nestjs apart from 200? i tried to inject response object in a method but there is no method to send error.</p>
+
+<pre><code>  save(  @Body() body:any,@Res() response: Response):string {
+
+console.log(""posting..."")
+    console.log(body)
+    return ""saving "" + JSON.stringify(body)
+
+  }
+</code></pre>
+
+<p>the above code send body with 20X status i want to send different status code like 400 or 500.</p>
+","javascript,typescript,nestjs",56883056,56883731,1
+94,Unrecognized font family &#39;FontAwesome5Free-Solid&#39;,"<p>This happened out of nowhere, and I have no idea what happened.</p>
+
+<p>I started to run my app and got this error:</p>
+
+<p><a href=""https://i.stack.imgur.com/cooAt.png"" rel=""nofollow noreferrer""><img src=""https://i.stack.imgur.com/cooAt.png"" alt=""enter image description here""></a></p>
+
+<p>I believe that it's coming from react-native-vector-icons.</p>
+
+<p>I've tried switching to an older version of react-native-vector-icons, and I still receive the same result.</p>
+
+<p>I've also tried to uninstall react-native-vector-icons, and, when I do, I receive a compiling error.</p>
+
+<pre><code>** BUILD FAILED **
+
+
+The following build commands failed:
+    CompileC /Users/lukeschoenberger/Documents/Programming/news-
+arg/test6/ios/build/test6/Build/Intermediates.noindex/Pods.build/Debug-
+iphonesimulator/RNVectorIcons.build/Objects-
+normal/x86_64/RNVectorIconsManager.o 
+/Users/lukeschoenberger/Documents/Programming/news-
+arg/test6/node_modules/react-native-vector-
+icons/RNVectorIconsManager/RNVectorIconsManager.m normal x86_64 
+objective-c com.apple.compilers.llvm.clang.1_0.compiler
+(1 failure)
+</code></pre>
+
+<p>I'm pretty stuck at this point.</p>
+
+<p>EDIT:</p>
+
+<p>After I linked react-native-vector-desing and cleared the build folder, I received this error:</p>
+
+<pre><code>Build system information
+error: Multiple commands produce '/Users/lukeschoenberger/Documents/Programming/news-arg/test6/ios/build/test6/Build/Products/Debug-iphonesimulator/test6.app/AntDesign.ttf':
+1) Target 'test6' (project 'test6') has copy command from 
+'/Users/lukeschoenberger/Documents/Programming/news-
+arg/test6/node_modules/native-base/Fonts/AntDesign.ttf' to 
+'/Users/lukeschoenberger/Documents/Programming/news-
+arg/test6/ios/build/test6/Build/Products/Debug-
+iphonesimulator/test6.app/AntDesign.ttf'
+
+2) Target 'test6' (project 'test6') has copy command from 
+'/Users/lukeschoenberger/Documents/Programming/news-
+arg/test6/node_modules/react-native-vector-icons/Fonts/AntDesign.ttf' to 
+'/Users/lukeschoenberger/Documents/Programming/news-
+arg/test6/ios/build/test6/Build/Products/Debug-
+iphonesimulator/test6.app/AntDesign.ttf'
+
+** BUILD FAILED **
+</code></pre>
+","swift,xcode,react-native",57193816,57193854,3
+95,Conversion of huge decimal numbers (128bit) formatted as ASCII to binary (hex),"<p>I'm hoping this is going to be my final question on here relating to this subject!</p>
+
+<p>I'm looking for a way to convert huge decimal numbers that are encoded as ASCII into their 128bit hexadecimal (binary) representation.</p>
+
+<p>These are actually IPv6 addresses presented in their decimal notation.</p>
+
+<p>for example: ""55844105986793442773355413541572575232"" resolves to: 0x2a032f00000000000000000000000000</p>
+
+<p>The majority of my code is in x86-32 MASM assembly, so I'd rather keep it this way than chopping between different languages.</p>
+
+<p>I've got code that works in python, but as above, I'd like to have everything in x86 asm.</p>
+","assembly,x86,bigint",57133190,0,2
+96,How to Paginate loaded relation with Laravel API resources,"<p>I need to load model relations in it's resource and paginate them.</p>
+<p>In my case i have <code>Category</code> and <code>Path</code> models, plus <code>CategoryResource</code> and <code>PathResource</code></p>
+<p>The <code>toArray</code> method of <code>CategoryResource</code> is like below:</p>
+<pre><code>public function toArray($request)
+{
+    return [
+        'id'   =&gt; $this-&gt;id,
+        'name' =&gt; $this-&gt;name,
+        'slug' =&gt; $this-&gt;slug,
+        'order' =&gt; $this-&gt;order,
+        'paths' =&gt; PathResource::collection($this-&gt;whenLoaded('paths'))
+    ];
+}
+</code></pre>
+<p>and <code>toArray</code> method of <code>PathResource</code> is like below:</p>
+<pre><code>public function toArray($request)
+{
+    return parent::toArray($request);
+}
+</code></pre>
+<p><strong>Question</strong> is how can i load and paginate related <code>Path</code>'s in my <code>CategoryResource</code>?</p>
+","laravel,api,pagination,resources,laravel-pagination",57151461,0,1
+97,How to use fetch to get data from an api,"<p>I'm creating a fetchBill function.
+It assigns <a href=""https://randomapi.com/api/006b08a801d82d0c9824dcfdfdfa3b3c"" rel=""nofollow noreferrer"">https://randomapi.com/api/006b08a801d82d0c9824dcfdfdfa3b3c</a> to an api variable.
+It uses the browser's fetch function to make a HTTP request to api.
+It uses an arrow function in a .then call to the fetch function,and returns the response after converting it to JSON.
+Using another .then call to the first one, the function passes the JSON data to displayCartTotal function. Finally, it handles errors that may occur, e.g by showing a warning message in the console.</p>
+
+<p>I've defined the displayCartTotal function as required by the challenge. And it's been verified to be correct.
+I've also defined the fetchBill function and it is returning a promise. In the promise, promiseStatus is ""resolved"", and promiseValue is an Array. I do not get any error, but this does not seem to solve the problem for the challenge.</p>
+
+<pre><code>    const displayCartTotal = ({results}) =&gt; results;
+
+    const fetchBill = () =&gt; {
+    const api = 
+    ""https://randomapi.com/api/006b08a801d82d0c9824dcfdfdfa3b3c"";
+    const results = fetch(api)
+        .then(res =&gt; res.json())
+        .then(data =&gt; displayCartTotal(data))
+        .catch(err =&gt; console.log(`Warning!!! Error fetching data!!! 
+        Error ${err}`));
+        return results;
+};
+</code></pre>
+
+<p>By calling displayCartTotal function, the fetchBill function should return the results property of the json object returned by the fetch request. I believe it's the promiseValue that is to be returned and not the entire promise from the http request.</p>
+","javascript,json,http,promise,fetch",57016341,57061124,3
+98,React-redux useDispatch() Uncaught TypeError,"<p>I'm trying to create a simple component to dispatch an action using the React Redux hook <code>useDispatch</code> - and I'm getting an error.  I've trimmed the component down to where the error occurs.  It happens when the useDispatch function is called.</p>
+
+<pre><code>import { useDispatch } from 'react-redux'
+
+const MyComp = () =&gt; {
+  useDispatch()
+  return null
+}
+
+export default MyComp
+</code></pre>
+
+<p>This is the error I'm seeing in dev console:</p>
+
+<pre><code>Uncaught TypeError: Object(...) is not a function
+    at MyComp (MyComp.js?cc4c:4)
+    at renderWithHooks (react-dom.development.js?d018:12938)
+    at mountIndeterminateComponent (react-dom.development.js?d018:15020)
+    at beginWork (react-dom.development.js?d018:15625)
+    at performUnitOfWork (react-dom.development.js?d018:19312)
+    at workLoop (react-dom.development.js?d018:19352)
+    at HTMLUnknownElement.callCallback (react-dom.development.js?d018:149)
+    at Object.invokeGuardedCallbackDev (react-dom.development.js?d018:199)
+    at invokeGuardedCallback (react-dom.development.js?d018:256)
+    at replayUnitOfWork (react-dom.development.js?d018:18578)
+</code></pre>
+
+<p>I've trimmed this down further so there are no parents in the react tree.  </p>
+
+<pre><code>const store = configureStore()
+
+ReactDOM.render(
+  &lt;Provider store={store}&gt;
+    &lt;MyComp /&gt;
+  &lt;/Provider&gt;,
+  document.getElementById('root')
+)
+</code></pre>
+
+<p>Module Versions</p>
+
+<pre><code>    ""react"": ""^16.8.6"",
+    ""react-dom"": ""^16.8.6"",
+    ""react-redux"": ""^7.1.0"",
+</code></pre>
+","reactjs,redux,react-redux,react-hooks",57277698,57367940,1
+99,Remove/change section header background color in SwiftUI List,"<p>With a simple <code>List</code> in SwiftUI, how do I change/remove the standard background color for the section header</p>
+
+<pre><code>struct ContentView : View {
+    var body: some View {
+        List {
+            ForEach(0...3) { section in
+                Section(header: Text(""Section"")) {
+                    ForEach(0...3) { row in
+                        Text(""Row"")
+                    }
+                }
+            }
+        }
+    }
+}
+</code></pre>
+
+<p><a href=""https://i.stack.imgur.com/VFPk4.png"" rel=""noreferrer""><img src=""https://i.stack.imgur.com/VFPk4.png"" alt=""Screenshot with grey section header background""></a></p>
+",swiftui,56867334,56868021,3
